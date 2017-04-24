@@ -110,6 +110,83 @@ namespace MyGame
             positionMur = new Vector3(444.85f, 0.4f, 250);
             GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(55, 36, 250 - 2.2f)));
 
+            int largeurEscalier = 4;
+            //Escalier en haut
+            positionMur = new Vector3(215 + largeurEscalier * 4, 0, 348.75f);
+            GameController.ListMurs.Add(new StairsXNegatif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurEscalier, 3, 40)));
+            positionMur = new Vector3(215 + largeurEscalier * 4 - largeurEscalier, 0, 348.75f);
+            GameController.ListMurs.Add(new StairsXNegatif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurEscalier, 6, 40)));
+            positionMur = new Vector3(215 + largeurEscalier * 4 - largeurEscalier * 2, 0, 348.75f);
+            GameController.ListMurs.Add(new StairsXNegatif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurEscalier, 9, 40)));
+            positionMur = new Vector3(215 + largeurEscalier * 4 - largeurEscalier * 3, 0, 348.75f);
+            GameController.ListMurs.Add(new StairsXNegatif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurEscalier, 12, 40)));
+            positionMur = new Vector3(215 + largeurEscalier * 4 - largeurEscalier * 4, 0, 348.75f);
+            GameController.ListMurs.Add(new StairsXNegatif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurEscalier, 15, 40)));
+
+
+            // Escalier droite
+            positionMur = new Vector3(158.75f, 0, 405 + largeurEscalier * 4);
+            GameController.ListMurs.Add(new StairsZNegatif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(40, 3, largeurEscalier)));
+            positionMur = new Vector3(158.75f, 0, 405 + largeurEscalier * 4 - largeurEscalier);
+            GameController.ListMurs.Add(new StairsZNegatif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(40, 6, largeurEscalier)));
+            positionMur = new Vector3(158.75f, 0, 405 + largeurEscalier * 4 - largeurEscalier * 2);
+            GameController.ListMurs.Add(new StairsZNegatif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(40, 9, largeurEscalier)));
+            positionMur = new Vector3(158.75f, 0, 405 + largeurEscalier * 4 - largeurEscalier * 3);
+            GameController.ListMurs.Add(new StairsZNegatif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(40, 12, largeurEscalier)));
+            positionMur = new Vector3(158.75f, 0, 405 + largeurEscalier * 4 - largeurEscalier * 4);
+            GameController.ListMurs.Add(new StairsZNegatif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(40, 15, largeurEscalier)));
+
+            // Escalier Bas
+            positionMur = new Vector3(140 - largeurEscalier * 5, 0, 348.75f);
+            GameController.ListMurs.Add(new StairsXPositif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurEscalier, 3, 40)));
+            positionMur = new Vector3(140 - largeurEscalier * 5 + largeurEscalier * 1, 0, 348.75f);
+            GameController.ListMurs.Add(new StairsXPositif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurEscalier, 6, 40)));
+            positionMur = new Vector3(140 - largeurEscalier * 5 + largeurEscalier * 2, 0, 348.75f);
+            GameController.ListMurs.Add(new StairsXPositif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurEscalier, 9, 40)));
+            positionMur = new Vector3(140 - largeurEscalier * 5 + largeurEscalier * 3, 0, 348.75f);
+            GameController.ListMurs.Add(new StairsXPositif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurEscalier, 12, 40)));
+            positionMur = new Vector3(140 - largeurEscalier * 5 + largeurEscalier * 4, 0, 348.75f);
+            GameController.ListMurs.Add(new StairsXPositif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurEscalier, 15, 40)));
+
+
+
+            //EscalierGauche
+            positionMur = new Vector3(158.75f, 0, 330 - largeurEscalier * 5);
+            GameController.ListMurs.Add(new StairsZPositif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(40, 3, largeurEscalier)));
+            positionMur = new Vector3(158.75f, 0, 330 - largeurEscalier * 5 + largeurEscalier);
+            GameController.ListMurs.Add(new StairsZPositif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(40, 6, largeurEscalier)));
+            positionMur = new Vector3(158.75f, 0, 330 - largeurEscalier * 5 + largeurEscalier * 2);
+            GameController.ListMurs.Add(new StairsZPositif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(40, 9, largeurEscalier)));
+            positionMur = new Vector3(158.75f, 0, 330 - largeurEscalier * 5 + largeurEscalier * 3);
+            GameController.ListMurs.Add(new StairsZPositif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(40, 12, largeurEscalier)));
+            positionMur = new Vector3(158.75f, 0, 330 - largeurEscalier * 5 + largeurEscalier * 4);
+            GameController.ListMurs.Add(new StairsZPositif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(40, 15, largeurEscalier)));
+
+
+            // Escalier droite 2iem plateforme
+            positionMur = new Vector3(441f, 0, 72 + largeurEscalier * 4);
+            GameController.ListMurs.Add(new StairsZNegatif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(40, 3, largeurEscalier)));
+            positionMur = new Vector3(441f, 0, 72 + largeurEscalier * 4 - largeurEscalier);
+            GameController.ListMurs.Add(new StairsZNegatif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(40, 6, largeurEscalier)));
+            positionMur = new Vector3(441f, 0, 72 + largeurEscalier * 4 - largeurEscalier * 2);
+            GameController.ListMurs.Add(new StairsZNegatif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(40, 9, largeurEscalier)));
+            positionMur = new Vector3(441f, 0, 72 + largeurEscalier * 4 - largeurEscalier * 3);
+            GameController.ListMurs.Add(new StairsZNegatif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(40, 12, largeurEscalier)));
+            positionMur = new Vector3(441f, 0, 72 + largeurEscalier * 4 - largeurEscalier * 4);
+            GameController.ListMurs.Add(new StairsZNegatif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(40, 15, largeurEscalier)));
+
+            //Escalier bas 2iem plateforme
+            positionMur = new Vector3(427.85f - largeurEscalier * 5, 0, 18);
+            GameController.ListMurs.Add(new StairsXPositif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurEscalier, 3, 40)));
+            positionMur = new Vector3(427.85f - largeurEscalier * 5 + largeurEscalier * 1, 0, 18);
+            GameController.ListMurs.Add(new StairsXPositif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurEscalier, 6, 40)));
+            positionMur = new Vector3(427.85f - largeurEscalier * 5 + largeurEscalier * 2, 0, 18);
+            GameController.ListMurs.Add(new StairsXPositif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurEscalier, 9, 40)));
+            positionMur = new Vector3(427.85f - largeurEscalier * 5 + largeurEscalier * 3, 0, 18);
+            GameController.ListMurs.Add(new StairsXPositif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurEscalier, 12, 40)));
+            positionMur = new Vector3(427.85f - largeurEscalier * 5 + largeurEscalier * 4, 0, 18);
+            GameController.ListMurs.Add(new StairsXPositif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurEscalier, 15, 40)));
+
             foreach (CubeTexturé c in GameController.ListMurs)
                 GameController.ListeDrawableComponents.Add(c);
         }

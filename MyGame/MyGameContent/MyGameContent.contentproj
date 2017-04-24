@@ -362,13 +362,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\OuaiMap.png">
-      <Name>OuaiMap</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Textures\CadreUmp45.png">
       <Name>CadreUmp45</Name>
       <Importer>TextureImporter</Importer>
@@ -514,6 +507,13 @@
   <ItemGroup>
     <Compile Include="Textures\Planet_texture_001_by_ralasterphecy.jpg">
       <Name>Planet_texture_001_by_ralasterphecy</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\OuaiMap.png">
+      <Name>OuaiMap</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
