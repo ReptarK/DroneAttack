@@ -109,7 +109,7 @@ namespace AtelierXNA
             Terrain = Game.Services.GetService(typeof(PlancherMap)) as PlancherMap;
             MyPlayer = Game.Services.GetService(typeof(LocalPlayer)) as LocalPlayer;
         }
-        protected override void CréerPointDeVue()
+        public override void CréerPointDeVue()
         {
             Direction = Vector3.Normalize(Direction);
             Latéral = Vector3.Cross(OrientationVerticale, Direction);
@@ -325,14 +325,14 @@ namespace AtelierXNA
         {
             return GestionInput.EstEnfoncée(touche) ? 1 : 0;
         }
-        private void GérerSouris()
+        public void GérerSouris()
         {
             AncienncePositionSouris = new Vector2(Ecran.CenterScreen.X, Ecran.CenterScreen.Y);
             Souris = Mouse.GetState();
             NouvellePositionSouris = new Vector2(Souris.X, Souris.Y);
             DéplacementSouris = NouvellePositionSouris - AncienncePositionSouris;
         }
-        private void GérerRotation()
+        public void GérerRotation()
         {
             GérerLacet();
             GérerTangage();

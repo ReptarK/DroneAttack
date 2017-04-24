@@ -313,8 +313,6 @@ namespace MyGame
             ListeDePack.Add(ammoPack);
 
             // Pipes au fond 
-            healthPack = new HealthPack(Game, 1f, Vector3.Zero, new Vector3(247.5f, 20.5f, 105), "HealthPackTexture", new Vector3(6, 6, 6), Data.INTERVALLE_MAJ_BASE);
-            GameController.ListeDrawableComponents.Add(healthPack);
 
 
             GameController.ListeDrawableComponents.Add(new Afficheur3D(Game));
@@ -329,6 +327,7 @@ namespace MyGame
             GameController.ListeDrawableComponents.Add(new ObjetDeBase(Game, "kulmaputki", 0.10f, Vector3.Zero, new Vector3(484, 2.5f, 10)));
             GameController.ListeDrawableComponents.Add(new ObjetDeBase(Game, "kulmaputki", 0.10f, Vector3.Zero, new Vector3(484, 2.5f, 25)));
             GameController.ListeDrawableComponents.Add(new ObjetDeBase(Game, "kulmaputki", 0.10f, Vector3.Zero, new Vector3(484, 2.5f, 40)));
+            GameController.ListeDrawableComponents.Add(new ObjetDeBase(Game, "Earth", 7f, new Vector3((float)Math.PI,(float)Math.PI,0), new Vector3(450, 200f, 450)));
 
 
             GameController.ListeDrawableComponents.Add(MyPlayer);

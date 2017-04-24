@@ -80,6 +80,7 @@ namespace MyGame.Entités
             GenerateurRandom = Game.Services.GetService(typeof(Random)) as Random;
             CreerWalkingSounds();
             JumpSound = GestionnaireDeSons.Find("Jump");
+            UpdateOrder = 110;
 
             InitialiserLocalPlayer();
 
@@ -238,7 +239,6 @@ namespace MyGame.Entités
                 foreach (BoundingBox b in ListeBoundingBox)
                 {
                     WallDistance = Vector3.Distance(GetRayBoundingBoxIntersectionPoint(myRay, b), CaméraJeu.Position);
-
                     if (WallDistance < DroneDistance)
                         return false;
                 }
@@ -251,6 +251,13 @@ namespace MyGame.Entités
         {
             float? distance = ray.Intersects(box);
             return ray.Position + ray.Direction * distance.Value;
+        }
+
+        private void GererLag()
+        {
+            CaméraJeu.GérerSouris();
+            CaméraJeu.GérerRotation();
+            CaméraJeu.CréerPointDeVue();
         }
 
     }

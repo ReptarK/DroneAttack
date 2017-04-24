@@ -134,6 +134,7 @@
     <Compile Include="Overlay.cs" />
     <Compile Include="IPack.cs" />
     <Compile Include="PlanCaméra.cs" />
+    <Compile Include="Skybox.cs" />
     <Compile Include="StairsXNegatif.cs" />
     <Compile Include="StairsXPositif.cs" />
     <Compile Include="StairsZNegatif.cs" />

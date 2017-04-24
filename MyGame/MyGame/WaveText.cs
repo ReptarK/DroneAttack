@@ -34,9 +34,13 @@ namespace MyGame
         {
             base.Update(gameTime);
 
-            if ((TempsÉcoulé += (float)gameTime.ElapsedGameTime.TotalSeconds) > 0.2f)
+            if (GameController.PlayState == GameController.InGameState.NewWave && (TempsÉcoulé += (float)gameTime.ElapsedGameTime.TotalSeconds) > 0.2f)
             {
                 Texte = "Numero Vague : " + GameController.WaveNo.ToString();
+                if(GameController.EstWaveSpéciale)
+                {
+                    Texte = "Vague Speciale";
+                }
             }
 
         }

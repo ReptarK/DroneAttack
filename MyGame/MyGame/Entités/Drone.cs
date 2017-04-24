@@ -33,11 +33,21 @@ namespace AtelierXNA
 
         protected virtual int Degats { get; set; }
 
-        BoundingBox boiteDeCollision;
+        static bool EstBoiteInitialisé = false;
+        static BoundingBox boiteDeCollision;
         public BoundingBox BoiteDeCollision
         {
-            get { return UpdateBoiteCollision(this.Modèle, this.GetMonde()); }
+            get { return UpdateBoiteDeCollision(); }
         }
+        BoundingBox UpdateBoiteDeCollision()
+        {
+            Vector3[] listeDesCoins = boiteDeCollision.GetCorners();
+            var monde = GetMonde();
+            Vector3.Transform(listeDesCoins, ref monde, listeDesCoins);
+            return BoundingBox.CreateFromPoints(listeDesCoins);
+        }
+
+        BoundingSphere SphèreDuDrone { get; set; }
 
         BoundingSphere sphereDeTir;
         public BoundingSphere SphereDeTir
@@ -47,40 +57,72 @@ namespace AtelierXNA
 
         public bool ADétruire { get; set; }
 
-        BoundingSphere SphèreDuDrone { get; set; }
+        //protected BoundingBox UpdateBoiteCollision(Model model, Matrix worldTransform)
+        //{
+        //    // Initialize minimum and maximum corners of the bounding box to max and min values
+        //    Vector3 min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+        //    Vector3 max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
-        protected BoundingBox UpdateBoiteCollision(Model model, Matrix worldTransform)
+        //    // For each mesh of the model
+        //    foreach (ModelMesh mesh in model.Meshes)
+        //    {
+        //        foreach (ModelMeshPart meshPart in mesh.MeshParts)
+        //        {
+        //            // Vertex buffer parameters
+        //            int vertexStride = meshPart.VertexBuffer.VertexDeclaration.VertexStride;
+        //            int vertexBufferSize = meshPart.NumVertices * vertexStride;
+
+        //            // Get vertex data as float
+        //            float[] vertexData = new float[vertexBufferSize / sizeof(float)];
+        //            meshPart.VertexBuffer.GetData<float>(vertexData);
+
+        //            // Iterate through vertices (possibly) growing bounding box, all calculations are done in world space
+        //            for (int i = 0; i < vertexBufferSize / sizeof(float); i += vertexStride / sizeof(float))
+        //            {
+        //                Vector3 transformedPosition = Vector3.Transform(new Vector3(vertexData[i], vertexData[i + 1], vertexData[i + 2]), worldTransform);
+
+        //                min = Vector3.Min(min, transformedPosition);
+        //                max = Vector3.Max(max, transformedPosition);
+        //            }
+        //        }
+        //    }
+
+        //    // Create and return bounding box
+        //    return new BoundingBox(min, max);
+        //}
+
+        void CreerListeDesBoites()
         {
-            // Initialize minimum and maximum corners of the bounding box to max and min values
-            Vector3 min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
-            Vector3 max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
-
-            // For each mesh of the model
-            foreach (ModelMesh mesh in model.Meshes)
+            foreach (ModelMesh maillage in Modèle.Meshes)
             {
-                foreach (ModelMeshPart meshPart in mesh.MeshParts)
+                boiteDeCollision = BoundingBox.CreateMerged(boiteDeCollision, CalculerBoundingBox(maillage));
+            }
+        }
+
+        BoundingBox CalculerBoundingBox(ModelMesh maillage)
+        {
+            int nbSommets = 0;
+
+            foreach(ModelMeshPart unMeshPart in maillage.MeshParts)
+            {
+                nbSommets += unMeshPart.VertexBuffer.VertexCount;
+            }
+
+            Vector3[] positionSommet = new Vector3[nbSommets];
+            int index = 0;
+            foreach (ModelMeshPart unMeshPart in maillage.MeshParts)
+            {
+                VertexPositionNormalTexture[] SommetsDuMaillage = new
+                    VertexPositionNormalTexture[unMeshPart.VertexBuffer.VertexCount];
+                unMeshPart.VertexBuffer.GetData<VertexPositionNormalTexture>(SommetsDuMaillage);
+                foreach(VertexPositionNormalTexture sommet in SommetsDuMaillage)
                 {
-                    // Vertex buffer parameters
-                    int vertexStride = meshPart.VertexBuffer.VertexDeclaration.VertexStride;
-                    int vertexBufferSize = meshPart.NumVertices * vertexStride;
-
-                    // Get vertex data as float
-                    float[] vertexData = new float[vertexBufferSize / sizeof(float)];
-                    meshPart.VertexBuffer.GetData<float>(vertexData);
-
-                    // Iterate through vertices (possibly) growing bounding box, all calculations are done in world space
-                    for (int i = 0; i < vertexBufferSize / sizeof(float); i += vertexStride / sizeof(float))
-                    {
-                        Vector3 transformedPosition = Vector3.Transform(new Vector3(vertexData[i], vertexData[i + 1], vertexData[i + 2]), worldTransform);
-
-                        min = Vector3.Min(min, transformedPosition);
-                        max = Vector3.Max(max, transformedPosition);
-                    }
+                    positionSommet[index] = sommet.Position;
+                    ++index;
                 }
             }
 
-            // Create and return bounding box
-            return new BoundingBox(min, max);
+            return BoundingBox.CreateFromPoints(positionSommet);
         }
 
         const float RADIUS_TIR = 100;
@@ -90,7 +132,7 @@ namespace AtelierXNA
 
             return sphereDeTir;
         }
-        public Drone(Game jeu, string nomModèle, float échelleInitiale, Vector3 rotationInitiale, Vector3 positionInitiale, float intervalleMAJ, Color couleur, Case startCase, float divisionDeplacement, int health) 
+        public Drone(Game jeu, string nomModèle, float échelleInitiale, Vector3 rotationInitiale, Vector3 positionInitiale, float intervalleMAJ, Color couleur, Case startCase, float divisionDeplacement, int health)
             : base(jeu, nomModèle, échelleInitiale, rotationInitiale, positionInitiale, intervalleMAJ, couleur)
         {
             StartCase = startCase;
@@ -127,14 +169,18 @@ namespace AtelierXNA
             DroneSound = GestionnaireDeSons.Find("DroneSound");
             BulletHit = GestionnaireDeSons.Find("BulletHit");
             BulletMiss = GestionnaireDeSons.Find("BulletMiss");
-
+            if(!EstBoiteInitialisé)
+            {
+                CreerListeDesBoites();
+                EstBoiteInitialisé = true;
+            }
             sphereDeTir = new BoundingSphere(Position, RADIUS_TIR);
 
             Compteur = (float)GenerateurRandom.NextDouble();
 
             GererPathFinding();
             SphèreDuDrone = Modèle.Meshes[0].BoundingSphere;
-            for (int i = 1; i< Modèle.Meshes.Count;++i)
+            for (int i = 1; i < Modèle.Meshes.Count; ++i)
             {
                 SphèreDuDrone = BoundingSphere.CreateMerged(SphèreDuDrone, Modèle.Meshes[i].BoundingSphere);
             }
@@ -151,7 +197,7 @@ namespace AtelierXNA
         protected float DivisionDeplacement;
         public override void Update(GameTime gameTime)
         {
-            if(!MortPlayerMenu.ShowDeathRecap)
+            if (!MortPlayerMenu.ShowDeathRecap)
             {
                 float RandomUpdate = 1f;
 
@@ -234,7 +280,7 @@ namespace AtelierXNA
                 OpenList.Add(c);
 
 
-            for(int i = 0; i < 20; ++i)
+            for (int i = 0; i < 20; ++i)
             {
                 SearchOpen();
 
@@ -254,7 +300,7 @@ namespace AtelierXNA
             float distance = float.MaxValue;
             Case CaseTarget = new Case(Vector3.Zero, null);
 
-            foreach(Case c in PointsDePatrouille.ListePoints)
+            foreach (Case c in PointsDePatrouille.ListePoints)
             {
                 float cDistance = Vector3.Distance(c.Position, MyPlayer.Position);
 
@@ -277,9 +323,9 @@ namespace AtelierXNA
 
         void SearchOpen()
         {
-            foreach(Case caseClose in CloseList)
+            foreach (Case caseClose in CloseList)
             {
-                foreach(Case c in caseClose.ListeParents)
+                foreach (Case c in caseClose.ListeParents)
                 {
                     if (!OpenList.Contains(c))
                         OpenList.Add(c);
@@ -289,14 +335,14 @@ namespace AtelierXNA
 
         void GenererHGCases()
         {
-            foreach(Case c in PointsDePatrouille.ListePoints)
+            foreach (Case c in PointsDePatrouille.ListePoints)
             {
                 c.H = Vector3.Distance(Target.Position, c.Position);
             }
 
-            foreach(Case parent in PointsDePatrouille.ListePoints)
+            foreach (Case parent in PointsDePatrouille.ListePoints)
             {
-                foreach(Case enfant in parent.ListeParents)
+                foreach (Case enfant in parent.ListeParents)
                 {
                     enfant.G = Vector3.Distance(parent.Position, enfant.Position);
                 }
@@ -308,23 +354,23 @@ namespace AtelierXNA
         {
             float distancePlayer = Vector3.Distance(Position, MyPlayer.Position);
 
-            if(distancePlayer < DISTANCE_MIN_SON)
+            if (distancePlayer < DISTANCE_MIN_SON)
             {
-                DroneSound.Play((DISTANCE_MIN_SON - distancePlayer) / DISTANCE_MIN_SON * 0.1f , 0, 0);
+                DroneSound.Play((DISTANCE_MIN_SON - distancePlayer) / DISTANCE_MIN_SON * 0.1f, 0, 0);
             }
         }
 
         void GererTir()
         {
-            if(EstEnCollision())
+            if (EstEnCollision())
             {
-                BoundingSphere sphereCentreDrone  = SphèreDuDrone.Transform(Monde);
+                BoundingSphere sphereCentreDrone = SphèreDuDrone.Transform(Monde);
                 sphereCentreDrone.Center += Vector3.UnitY * 3;
                 Game.Components.Add(new RayonLaserCylindrique(Game, 1, Vector3.Zero, sphereCentreDrone.Center, Vector3.Normalize(CaméraJeu.Position - new Vector3(0, 15, 0) - Position),
                     new Vector2(0.1f, Vector3.Distance(CaméraJeu.Position, Position)), new Vector2(10, 10), "RedScreen", 0.01f, 0.1f));
                 //Game.Components.Add(new RayonLaserCylindrique(Game, 1, Vector3.Zero, Position + (BoiteDeCollision.Max - BoiteDeCollision.Min) / 2, Vector3.Normalize(CaméraJeu.Position - new Vector3(0, 15, 0) - Position),
                 //    new Vector2(0.1f, Vector3.Distance(CaméraJeu.Position, Position)), new Vector2(10, 10), "RedScreen", 0.01f, 0.1f));
-                if (GenerateurRandom.Next(0,Data.ChanceDeTir) == 0)
+                if (GenerateurRandom.Next(0, Data.ChanceDeTir) == 0)
                 {
                     BulletHit.Play(0.3f, 0, 0);
                     MyPlayer.Health -= Degats;

@@ -124,7 +124,6 @@ namespace MyGame
             get { return 4 - DifficultéIndex; }
         }
 
-
         static Data()
         {
             Sensivity = 1f;
@@ -134,6 +133,7 @@ namespace MyGame
             CouleurIndex = 0;
 
             DimentionCarte = new Vector3(500, 0, 500);
+
         }
     }
 }

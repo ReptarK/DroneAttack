@@ -153,8 +153,7 @@ namespace MyGame
 
         void InitialiserFondEcran()
         {
-            FondEcran = new ArrièrePlanDéroulant(Game, "CielÉtoilé", Data.INTERVALLE_MAJ_BASE);
-            ListeDrawableComponents.Add(FondEcran);
+            ListeDrawableComponents.Add(new Skybox(Game, 1f, Vector3.Zero, new Vector3(-100, -10, -100), "Starscape", new Vector3(700, 400, 700)));
         }
 
 
@@ -166,8 +165,6 @@ namespace MyGame
             {
                 if ((TempsÉcoulé += (float)gameTime.ElapsedGameTime.TotalSeconds) > Data.INTERVALLE_MAJ_BASE)
                 {
-                    //Game.Window.Title = CaméraJeu.Position.ToString();
-
                     GererCollision();
                     NettoyerListeComponents();
                     if (MyPlayer.MyGun != null)
@@ -290,11 +287,6 @@ namespace MyGame
                     bCheck = true;
                     ++compteurDroneSpawn;
                     SpawnNewRandomDrone();
-                    //Drone d = new BlueDrone(Game, "drone", 0.4f, Vector3.Zero, Vector3.Zero, Data.INTERVALLE_MAJ_BASE, new Color(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255)), PointsDePatrouille.ListeSpawns[random.Next(0, PointsDePatrouille.ListeSpawns.Count)], random.Next(80, 150), (int)Math.Ceiling(WaveNo * WaveNo / 2f));
-                    //ListDrones.Add(d);
-                    //ListeDrawableComponents.Add(d);
-                    //Game.Components.Add(new Afficheur3D(Game));
-                    //Game.Components.Add(d);
                 }
                 else
                     PlayState = InGameState.Play;

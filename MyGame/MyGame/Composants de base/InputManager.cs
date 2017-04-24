@@ -22,6 +22,7 @@ namespace AtelierXNA
             AnciennesTouches = NouvellesTouches;
             NouvelÉtatSouris = Mouse.GetState();
             AncienÉtatSouris = NouvelÉtatSouris;
+            UpdateOrder = 110;
             base.Initialize();
         }
 

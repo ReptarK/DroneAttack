@@ -6,7 +6,7 @@ namespace AtelierXNA
    {
       protected const float OUVERTURE_OBJECTIF = MathHelper.PiOver4; //45 degrés
       protected const float DISTANCE_PLAN_RAPPROCHÉ = 0.001f;
-      protected const float DISTANCE_PLAN_ÉLOIGNÉ = 730f; 
+      protected const float DISTANCE_PLAN_ÉLOIGNÉ = 1000; 
 
       public Matrix Vue { get; protected set; }
       public Matrix Projection { get; protected set; }
@@ -27,7 +27,7 @@ namespace AtelierXNA
          : base(jeu)
       { }
 
-      protected virtual void CréerPointDeVue()
+      public virtual void CréerPointDeVue()
       {
          //Création de la matrice de vue (point de vue)
          Vue = Matrix.CreateLookAt(Position, Cible, OrientationVerticale);
