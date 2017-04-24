@@ -93,7 +93,7 @@ namespace MyGame.Entités
 
             AncienGun = MyGun;
 
-            Monney = 500;
+            Monney = 10000;
             Health = 100;
         }
 
@@ -223,7 +223,6 @@ namespace MyGame.Entités
         {
             Ray myRay = GetPlayerRay;
             List<BoundingBox> ListeBoundingBox = new List<BoundingBox>();
-
             if (myRay.Intersects(drone.BoiteDeCollision) != null)
             {
                 foreach (ICollisionableList c in GameController.ListMurs)
@@ -236,7 +235,6 @@ namespace MyGame.Entités
                 }
 
                 DroneDistance = Vector3.Distance(drone.Position, CaméraJeu.Position);
-
                 foreach (BoundingBox b in ListeBoundingBox)
                 {
                     WallDistance = Vector3.Distance(GetRayBoundingBoxIntersectionPoint(myRay, b), CaméraJeu.Position);
@@ -244,9 +242,7 @@ namespace MyGame.Entités
                     if (WallDistance < DroneDistance)
                         return false;
                 }
-
                 return true;
-
             }
             return false;
         }

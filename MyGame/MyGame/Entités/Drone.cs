@@ -25,12 +25,13 @@ namespace AtelierXNA
 
         float Compteur { get; set; }
 
-        public int Health;
+        public float Health;
 
         Caméra1stPerson CaméraJeu;
 
-        Random GenerateurRandom;
+        protected Random GenerateurRandom;
 
+        protected virtual int Degats { get; set; }
 
         BoundingBox boiteDeCollision;
         public BoundingBox BoiteDeCollision
@@ -141,15 +142,13 @@ namespace AtelierXNA
 
         float TempsÉcouléSound = 0;
         float TempsÉcouléDestruction = 0;
-        float TempsÉcouléUpdatePath = 0;
-        float TempsÉcouléDeplacement = 0;
         float TempsÉcouléRandom = 0;
         float TempsÉcouléTir = 0;
         Vector3 Deplacement;
         bool UpdatePath = true;
         Case ActualCase;
         int compteur = 0;
-        float DivisionDeplacement;
+        protected float DivisionDeplacement;
         public override void Update(GameTime gameTime)
         {
             if(!MortPlayerMenu.ShowDeathRecap)
@@ -182,28 +181,35 @@ namespace AtelierXNA
                     TempsÉcouléDestruction = 0;
                 }
 
-                if (UpdatePath)
+                GererPathDrone(gameTime);
+            }
+        }
+
+        protected float TempsÉcouléUpdatePath = 0;
+        protected float TempsÉcouléDeplacement = 0;
+        public virtual void GererPathDrone(GameTime gameTime)
+        {
+            if (UpdatePath)
+            {
+                GererPathFinding();
+
+                Deplacement = (CloseList[1].Position - ActualCase.Position) / DivisionDeplacement;
+
+                UpdatePath = false;
+            }
+
+            TempsÉcouléUpdatePath += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if ((TempsÉcouléDeplacement += (float)gameTime.ElapsedGameTime.TotalSeconds) > 0.02f)
+            {
+                TempsÉcouléDeplacement = 0;
+
+                Position += Deplacement;
+
+                if (++compteur == DivisionDeplacement)
                 {
-                    GererPathFinding();
-
-                    Deplacement = (CloseList[1].Position - ActualCase.Position) / DivisionDeplacement;
-
-                    UpdatePath = false;
-                }
-
-                TempsÉcouléUpdatePath += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if ((TempsÉcouléDeplacement += (float)gameTime.ElapsedGameTime.TotalSeconds) > 0.03f)
-                {
-                    TempsÉcouléDeplacement = 0;
-
-                    Position += Deplacement;
-
-                    if (++compteur == DivisionDeplacement)
-                    {
-                        ActualCase = CloseList[1];
-                        UpdatePath = true;
-                        compteur = 0;
-                    }
+                    ActualCase = CloseList[1];
+                    UpdatePath = true;
+                    compteur = 0;
                 }
             }
         }
@@ -321,7 +327,7 @@ namespace AtelierXNA
                 if (GenerateurRandom.Next(0,Data.ChanceDeTir) == 0)
                 {
                     BulletHit.Play(0.3f, 0, 0);
-                    MyPlayer.Health -= 5;
+                    MyPlayer.Health -= Degats;
                 }
                 else
                 {
@@ -334,8 +340,13 @@ namespace AtelierXNA
         float WallDistance;
         public bool EstEnCollision()
         {
+            BoundingSphere sphereCentreDrone = SphèreDuDrone.Transform(Monde);
+            sphereCentreDrone.Center += Vector3.UnitY * 3;
             Ray DroneRay;
             List<BoundingBox> ListeBoundingBox = new List<BoundingBox>();
+
+            PlayerDistance = Vector3.Distance(sphereCentreDrone.Center, CaméraJeu.Position);
+            DroneRay = new Ray(sphereCentreDrone.Center, Vector3.Normalize(CaméraJeu.Position - sphereCentreDrone.Center));
 
             if (SphereDeTir.Intersects(MyPlayer.BoiteDeCollision))
             {
@@ -343,13 +354,11 @@ namespace AtelierXNA
                 {
                     foreach (BoundingBox b in c.ListeBoundingBox)
                     {
-                        if (SphereDeTir.Intersects(b))
+                        if (DroneRay.Intersects(b) != null)
                             ListeBoundingBox.Add(b);
                     }
                 }
 
-                PlayerDistance = Vector3.Distance(Position, CaméraJeu.Position);
-                DroneRay = new Ray(Position, Vector3.Normalize(CaméraJeu.Position - Position));
 
                 foreach (BoundingBox b in ListeBoundingBox)
                 {

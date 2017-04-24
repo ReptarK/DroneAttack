@@ -119,6 +119,7 @@
     <Compile Include="Entités\IDestructible.cs" />
     <Compile Include="Entités\LocalPlayer.cs" />
     <Compile Include="Entités\RayonLaserCylindrique.cs" />
+    <Compile Include="Entités\DroneList.cs" />
     <Compile Include="GameController.cs" />
     <Compile Include="Composants Menu\MortPlayerMenu.cs" />
     <Compile Include="GererPack.cs" />

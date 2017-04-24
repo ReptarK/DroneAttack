@@ -176,11 +176,8 @@ namespace AtelierXNA
                 if (EstEnSaut)
                     GererJump();
 
-                //if (EstCrouch)
-                //GererCrouch();
                 else { EstCrouch = false; }
 
-                //GererForces((float)gameTime.ElapsedGameTime.TotalSeconds * 20);
                 GererForces(VITESSE_UPDATE_DEPLACEMENT);
 
                 if (GestionInput.EstSourisActive)

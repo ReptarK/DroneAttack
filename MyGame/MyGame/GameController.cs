@@ -17,6 +17,7 @@ namespace MyGame
 {
     public class GameController : Microsoft.Xna.Framework.GameComponent, IController
     {
+        Random GenerateurRandom;
 
         Screen Ecran;
 
@@ -86,6 +87,7 @@ namespace MyGame
             ListeGuns = new List<Gun>();
             PlayState = InGameState.NewWave;
 
+            GenerateurRandom = Game.Services.GetService(typeof(Random)) as Random;
             Game.Services.AddService(typeof(GameController), this);
             MyPlayer = new LocalPlayer(Game, "me", new Vector3(200, 100, 10) - (Vector3.UnitY * Caméra1stPerson.HAUTEUR_PLAYER), 100);
             Game.Services.AddService(typeof(LocalPlayer), MyPlayer);
@@ -273,26 +275,26 @@ namespace MyGame
 
         public int NbDronesRestants { get { return ListDrones.Count; } }
         public int NbDronesParWave { get { return WaveNo; } }
+        public bool EstWaveSpéciale { get { return WaveNo % 5 == 0; } }
         public int compteurDroneSpawn = 0;
-        public static int WaveNo = 1;
+        public static int WaveNo = 10;
         SoundEffect ChangeWaveSong;
         bool bCheck = true;
 
         void GererDrones(GameTime gameTime)
         {
-            Random random = Game.Services.GetService(typeof(Random)) as Random;
-
             if (PlayState == InGameState.NewWave)
             {
                 if (compteurDroneSpawn < NbDronesParWave)
                 {
                     bCheck = true;
                     ++compteurDroneSpawn;
-                    Drone d = new Drone(Game, "drone", 0.4f, Vector3.Zero, Vector3.Zero, Data.INTERVALLE_MAJ_BASE, new Color(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255)), PointsDePatrouille.ListeSpawns[random.Next(0, PointsDePatrouille.ListeSpawns.Count)], random.Next(80, 150), (int)Math.Ceiling(WaveNo * WaveNo / 2f));
-                    ListDrones.Add(d);
-                    ListeDrawableComponents.Add(d);
-                    Game.Components.Add(new Afficheur3D(Game));
-                    Game.Components.Add(d);
+                    SpawnNewRandomDrone();
+                    //Drone d = new BlueDrone(Game, "drone", 0.4f, Vector3.Zero, Vector3.Zero, Data.INTERVALLE_MAJ_BASE, new Color(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255)), PointsDePatrouille.ListeSpawns[random.Next(0, PointsDePatrouille.ListeSpawns.Count)], random.Next(80, 150), (int)Math.Ceiling(WaveNo * WaveNo / 2f));
+                    //ListDrones.Add(d);
+                    //ListeDrawableComponents.Add(d);
+                    //Game.Components.Add(new Afficheur3D(Game));
+                    //Game.Components.Add(d);
                 }
                 else
                     PlayState = InGameState.Play;
@@ -306,6 +308,28 @@ namespace MyGame
                 PlayState = InGameState.NewWave;
                 compteurDroneSpawn = 0;
             }
+        }
+
+        void SpawnNewRandomDrone()
+        {
+            Drone d;
+            int indexDrone = GenerateurRandom.Next(0, 3);
+            if(!EstWaveSpéciale)
+            {
+                switch (indexDrone)
+                {
+                    case (RedDrone.IndexDrone): d = new RedDrone(Game, "drone", 0.4f, Vector3.Zero, Vector3.Zero, Data.INTERVALLE_MAJ_BASE, new Color(GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255)), PointsDePatrouille.ListeSpawns[GenerateurRandom.Next(0, PointsDePatrouille.ListeSpawns.Count)], GenerateurRandom.Next(80, 150), (int)Math.Ceiling(WaveNo * WaveNo / 2f)); break;
+                    case (BlueDrone.IndexDrone): d = new BlueDrone(Game, "drone", 0.4f, Vector3.Zero, Vector3.Zero, Data.INTERVALLE_MAJ_BASE, new Color(GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255)), PointsDePatrouille.ListeSpawns[GenerateurRandom.Next(0, PointsDePatrouille.ListeSpawns.Count)], GenerateurRandom.Next(80, 150), (int)Math.Ceiling(WaveNo * WaveNo / 2f)); break;
+                    case (YellowDrone.IndexDrone): d = new YellowDrone(Game, "drone", 0.4f, Vector3.Zero, Vector3.Zero, Data.INTERVALLE_MAJ_BASE, new Color(GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255)), PointsDePatrouille.ListeSpawns[GenerateurRandom.Next(0, PointsDePatrouille.ListeSpawns.Count)], GenerateurRandom.Next(80, 150), (int)Math.Ceiling(WaveNo * WaveNo / 2f)); break;
+                    default: d = new Drone(Game, "drone", 0.4f, Vector3.Zero, Vector3.Zero, Data.INTERVALLE_MAJ_BASE, new Color(GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255)), PointsDePatrouille.ListeSpawns[GenerateurRandom.Next(0, PointsDePatrouille.ListeSpawns.Count)], GenerateurRandom.Next(80, 150), (int)Math.Ceiling(WaveNo * WaveNo / 2f)); break;
+                }
+            }
+            else { d = new InvisibleDrone(Game, "drone", 0.4f, Vector3.Zero, Vector3.Zero, Data.INTERVALLE_MAJ_BASE, new Color(GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255)), PointsDePatrouille.ListeSpawns[GenerateurRandom.Next(0, PointsDePatrouille.ListeSpawns.Count)], GenerateurRandom.Next(80, 150), (int)Math.Ceiling(WaveNo * WaveNo / 2f)); }
+
+            ListDrones.Add(d);
+            ListeDrawableComponents.Add(d);
+            Game.Components.Add(new Afficheur3D(Game));
+            Game.Components.Add(d);
         }
 
         public void IsVisibleController(MainGame.GameState gameState)

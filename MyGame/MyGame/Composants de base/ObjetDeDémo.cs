@@ -30,7 +30,7 @@ namespace AtelierXNA
         Vector3 RotationCopie { get; set; }
         Vector3 PositionCopie { get; set; }
 
-        Color Couleur;
+        protected Color Couleur;
 
         public ObjetDeDémo(Game jeu, string nomModèle, float échelleInitiale, Vector3 rotationInitiale,
             Vector3 positionInitiale, float intervalleMAJ, Color couleur)
