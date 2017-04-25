@@ -139,6 +139,10 @@ namespace MyGame
             Game.Components.Add(TexteVague);
             Game.Components.Add(DroneEnVieTexte);
 
+            //Pour initialiser la BoiteDeCollision statique
+            Drone d = new Drone(Game, "drone", 0.4f, Vector3.Zero, Vector3.Zero, Data.INTERVALLE_MAJ_BASE, new Color(GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255)), PointsDePatrouille.ListeSpawns[GenerateurRandom.Next(0, PointsDePatrouille.ListeSpawns.Count)], GenerateurRandom.Next(80, 150), (int)Math.Ceiling(WaveNo * WaveNo / 2f));
+            d.Initialize();
+            d = null;
 
         }
 
@@ -153,7 +157,7 @@ namespace MyGame
 
         void InitialiserFondEcran()
         {
-            ListeDrawableComponents.Add(new Skybox(Game, 1f, Vector3.Zero, new Vector3(-100, -10, -100), "Starscape", new Vector3(700, 400, 700)));
+            ListeDrawableComponents.Add(new Skybox(Game, 1f, Vector3.Zero, new Vector3(-100, -10, -100), "Starscape", new Vector3(800, 400, 800)));
         }
 
 
@@ -165,6 +169,7 @@ namespace MyGame
             {
                 if ((TempsÉcoulé += (float)gameTime.ElapsedGameTime.TotalSeconds) > Data.INTERVALLE_MAJ_BASE)
                 {
+                    Game.Window.Title = CaméraJeu.Position.ToString();
                     GererCollision();
                     NettoyerListeComponents();
                     if (MyPlayer.MyGun != null)
@@ -231,9 +236,12 @@ namespace MyGame
 
             if (LocalPlayer.EstShoot)
             {
+                Vector3 positionTir = new Vector3();
+                Vector3 rotationBulletHole = new Vector3();
+
                 foreach (Drone drone in ListDrones)
                 {
-                    if (MyPlayer.EstEnCollision(drone))
+                    if (MyPlayer.EstEnCollision(drone, out positionTir, out rotationBulletHole))
                     {
                         if (Game.Components.Contains(HitMark))
                             HitMark.Alpha = 1;
@@ -247,6 +255,15 @@ namespace MyGame
                         MyPlayer.Monney += 50;
                         LocalPlayer.EstShoot = false;
                         return;
+                    }
+                    else
+                    {
+                        if(positionTir != Vector3.Zero)
+                        {
+                            TrouDeBalle bulletHole = new TrouDeBalle(Game, 0.1f, rotationBulletHole, positionTir, new Vector2(10, 10), new Vector2(10, 10), "BulletHole", Data.INTERVALLE_MAJ_BASE, 3.5f);
+                            Game.Components.Add(bulletHole);
+                            ListeDrawableComponents.Add(bulletHole);
+                        }
                     }
                 }
                 LocalPlayer.EstShoot = false;
@@ -274,7 +291,7 @@ namespace MyGame
         public int NbDronesParWave { get { return WaveNo; } }
         public bool EstWaveSpéciale { get { return WaveNo % 5 == 0; } }
         public int compteurDroneSpawn = 0;
-        public static int WaveNo = 10;
+        public static int WaveNo = 1;
         SoundEffect ChangeWaveSong;
         bool bCheck = true;
 

@@ -36,7 +36,7 @@ namespace AtelierXNA
         public const float INTERVALLE_CALCUL_FPS = 1f;
         public const float INTERVALLE_MAJ_STANDARD = 1f / 600f;
 
-        GraphicsDeviceManager PériphériqueGraphique { get; set; }
+        public static GraphicsDeviceManager PériphériqueGraphique { get; set; }
 
         public static Caméra CaméraJeu { get; set; }
         InputManager GestionInput { get; set; }
@@ -61,7 +61,7 @@ namespace AtelierXNA
             IsFixedTimeStep = true;
             IsMouseVisible = true;
             //PériphériqueGraphique.PreferredBackBufferWidth = 1900;
-            //PériphériqueGraphique.PreferredBackBufferHeight = 1060;
+            //PériphériqueGraphique.PreferredBackBufferHeight = 1080;
 
             PériphériqueGraphique.IsFullScreen = false;
 
@@ -82,7 +82,7 @@ namespace AtelierXNA
             Services.AddService(typeof(RessourcesManager<Model>), GestionnaireDeModèles);
 
             Components.Add(new Afficheur3D(this));
-            Components.Add(new AfficheurFPS(this, "Arial_FPS", Color.LightYellow, INTERVALLE_CALCUL_FPS / 2));
+            Components.Add(new AfficheurFPS(this, "Arial_FPS", Color.LightYellow, INTERVALLE_CALCUL_FPS / 3));
 
             InitialiserServices();
 

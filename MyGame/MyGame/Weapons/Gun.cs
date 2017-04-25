@@ -35,6 +35,7 @@ namespace MyGame.Weapons
         public int MunitionsParLoad;
         public int Munitions;
         public int TotalMunitions;
+        public virtual int MunitionsParPack { get; set; }
 
         public Rectangle ZoneAffichageGun;
         public Rectangle ZoneAffichageScoped;

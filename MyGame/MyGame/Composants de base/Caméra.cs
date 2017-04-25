@@ -6,7 +6,7 @@ namespace AtelierXNA
    {
       protected const float OUVERTURE_OBJECTIF = MathHelper.PiOver4; //45 degrés
       protected const float DISTANCE_PLAN_RAPPROCHÉ = 0.001f;
-      protected const float DISTANCE_PLAN_ÉLOIGNÉ = 1000; 
+      protected const float DISTANCE_PLAN_ÉLOIGNÉ = 1200; 
 
       public Matrix Vue { get; protected set; }
       public Matrix Projection { get; protected set; }

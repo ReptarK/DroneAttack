@@ -140,6 +140,7 @@
     <Compile Include="StairsZNegatif.cs" />
     <Compile Include="StairsZPositif.cs" />
     <Compile Include="TexteBienvenue.cs" />
+    <Compile Include="TrouDeBalle.cs" />
     <Compile Include="WaveText.cs" />
     <Compile Include="Weapons\GestionnaireAmmo.cs" />
     <Compile Include="HealthBar.cs" />

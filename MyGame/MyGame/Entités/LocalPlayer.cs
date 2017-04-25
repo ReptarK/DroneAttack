@@ -49,7 +49,7 @@ namespace MyGame.Entités
             {
                 if (value > 100)
                     value = 100;
-                if(value <= 0)
+                if (value <= 0)
                 {
                     value = 0;
                     GameController.PlayState = GameController.InGameState.Dead;
@@ -94,7 +94,7 @@ namespace MyGame.Entités
 
             AncienGun = MyGun;
 
-            Monney = 10000;
+            Monney = 500;
             Health = 100;
         }
 
@@ -102,7 +102,7 @@ namespace MyGame.Entités
         {
             ListeWalking = new List<SoundEffect>();
 
-            for(int i = 1; i <= 4; ++i)
+            for (int i = 1; i <= 4; ++i)
             {
                 ListeWalking.Add(GestionnaireDeSons.Find("Walking" + i.ToString()));
             }
@@ -172,7 +172,7 @@ namespace MyGame.Entités
 
         void GererWalk()
         {
-            if(Caméra1stPerson.EstSol && EstToucheMarche())
+            if (Caméra1stPerson.EstSol && EstToucheMarche())
             {
                 TempsÉcouléSound = 0;
                 ListeWalking[GenerateurRandom.Next(0, ListeWalking.Count - 1)].Play();
@@ -185,7 +185,7 @@ namespace MyGame.Entités
             if (Caméra1stPerson.EstEnSaut && !DoOnce)
             {
                 DoOnce = true;
-                JumpSound.Play(0.5f,0,0);
+                JumpSound.Play(0.5f, 0, 0);
             }
         }
 
@@ -200,16 +200,9 @@ namespace MyGame.Entités
 
         void UpdatePosition()
         {
-            if(Caméra1stPerson.EstSol)
+            if (Caméra1stPerson.EstSol)
             {
                 Position.Y = 0;
-            }
-            float hauteur = Caméra1stPerson.HAUTEUR_PLAYER;
-
-            if (Caméra1stPerson.EstCrouch)
-            {
-                hauteur = hauteur / 2;
-                Caméra1stPerson.EstCrouch = false;
             }
 
             Position = CaméraJeu.Position - (Vector3.UnitY * Caméra1stPerson.HAUTEUR_PLAYER);
@@ -218,29 +211,93 @@ namespace MyGame.Entités
 
 
 
-        float DroneDistance;
-        float WallDistance;
-        public bool EstEnCollision(Drone drone)
+        //public bool EstEnCollision(Drone drone)
+        //{
+        //    float DroneDistance;
+        //    float WallDistance;
+        //    Ray myRay = GetPlayerRay;
+        //    List<BoundingBox> ListeBoundingBox = new List<BoundingBox>();
+        //    if (myRay.Intersects(drone.BoiteDeCollision) != null)
+        //    {
+        //        foreach (ICollisionableList c in GameController.ListMurs)
+        //        {
+        //            foreach (BoundingBox b in c.ListeBoundingBox)
+        //            {
+        //                if (myRay.Intersects(b) != null)
+        //                    ListeBoundingBox.Add(b);
+        //            }
+        //        }
+
+        //        DroneDistance = Vector3.Distance(drone.Position, CaméraJeu.Position);
+        //        foreach (BoundingBox b in ListeBoundingBox)
+        //        {
+        //            WallDistance = Vector3.Distance(GetRayBoundingBoxIntersectionPoint(myRay, b), CaméraJeu.Position);
+
+        //            if (WallDistance < DroneDistance)
+        //            {
+        //                return false;
+        //            }
+        //        }
+        //        return true;
+        //    }
+        //    return false;
+        //}
+
+        public bool EstEnCollision(Drone drone, out Vector3 positionTir, out Vector3 rotationBullet)
         {
+            float DroneDistance;
+            float WallDistance;
+            float TirDistanceTemp;
+            float TirDistance;
             Ray myRay = GetPlayerRay;
-            List<BoundingBox> ListeBoundingBox = new List<BoundingBox>();
+            List<BoundingBox> ListeBoundingBoxRay = new List<BoundingBox>();
+            List<Vector3> ListeNormales = new List<Vector3>();
+            positionTir = new Vector3();
+            rotationBullet = new Vector3();
+            int index = 0;
+
+            foreach (ICollisionableList c in GameController.ListMurs)
+            {
+                index = 0;
+                foreach (BoundingBox b in c.ListeBoundingBox)
+                {
+                    if (myRay.Intersects(b) != null)
+                    {
+                        ListeBoundingBoxRay.Add(b);
+                        ListeNormales.Add(c.ListeNormales[index]);
+                    }
+                    ++index;
+                }
+            }
+
+            //Position Mur
+            TirDistance = float.MaxValue;
+            int indexNormales = 0;
+            foreach (BoundingBox b in ListeBoundingBoxRay)
+            {
+                Vector3 positionTirTemp = GetRayBoundingBoxIntersectionPoint(myRay, b);
+                WallDistance = Vector3.Distance(positionTir, CaméraJeu.Position);
+                TirDistanceTemp = Vector3.Distance(positionTirTemp, CaméraJeu.Position);
+                if (TirDistanceTemp < TirDistance)
+                {
+                    TirDistance = TirDistanceTemp;
+                    positionTir = positionTirTemp;
+                    if (ListeNormales[indexNormales].X != 0)
+                        rotationBullet = new Vector3(0, (float)Math.PI / 2f, (float)Math.PI / 2f);
+                    else
+                        rotationBullet = Vector3.Zero;
+                }
+                ++indexNormales;
+            }
+
+            //Collision avec drone
             if (myRay.Intersects(drone.BoiteDeCollision) != null)
             {
-                foreach (ICollisionableList c in GameController.ListMurs)
-                {
-                    foreach (BoundingBox b in c.ListeBoundingBox)
-                    {
-                        if (myRay.Intersects(b) != null)
-                            ListeBoundingBox.Add(b);
-                    }
-                }
-
                 DroneDistance = Vector3.Distance(drone.Position, CaméraJeu.Position);
-                foreach (BoundingBox b in ListeBoundingBox)
+                WallDistance = Vector3.Distance(positionTir, CaméraJeu.Position);
+                if (WallDistance < DroneDistance)
                 {
-                    WallDistance = Vector3.Distance(GetRayBoundingBoxIntersectionPoint(myRay, b), CaméraJeu.Position);
-                    if (WallDistance < DroneDistance)
-                        return false;
+                    return false;
                 }
                 return true;
             }
@@ -251,13 +308,6 @@ namespace MyGame.Entités
         {
             float? distance = ray.Intersects(box);
             return ray.Position + ray.Direction * distance.Value;
-        }
-
-        private void GererLag()
-        {
-            CaméraJeu.GérerSouris();
-            CaméraJeu.GérerRotation();
-            CaméraJeu.CréerPointDeVue();
         }
 
     }

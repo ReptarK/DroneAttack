@@ -15,6 +15,7 @@ namespace MyGame.Weapons
 {
     public class GunTextureManager : DrawableGameComponent, Overlay
     {
+        Screen Ecran;
         protected SpriteBatch GestionSprites { get; private set; }
         RessourcesManager<Texture2D> GestionnaireDeTextures { get; set; }
 
@@ -35,9 +36,9 @@ namespace MyGame.Weapons
         {
             base.Initialize();
 
+            Ecran = Game.Services.GetService(typeof(Screen)) as Screen;
             GestionSprites = Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
             GestionnaireDeTextures = Game.Services.GetService(typeof(RessourcesManager<Texture2D>)) as RessourcesManager<Texture2D>;
-
             MyGun = GameController.MyPlayer.MyGun;
 
             DrawOrder = 300;
@@ -50,8 +51,14 @@ namespace MyGame.Weapons
                 if (MyGun != GameController.MyPlayer.MyGun)
                 {
                     MyGun = GameController.MyPlayer.MyGun;
+
                     ZoneAffichageGun = GameController.MyPlayer.MyGun.ZoneAffichageGun;
+                    ZoneAffichageGun.Width = (int)(ZoneAffichageGun.Width * Ecran.ScreenScale.X);
+                    ZoneAffichageGun.Height = (int)(ZoneAffichageGun.Height * Ecran.ScreenScale.Y);
+
                     ZoneAffichageScoped = GameController.MyPlayer.MyGun.ZoneAffichageScoped;
+                    ZoneAffichageScoped.Width = (int)(ZoneAffichageScoped.Width * Ecran.ScreenScale.X);
+                    ZoneAffichageScoped.Height = (int)(ZoneAffichageScoped.Height * Ecran.ScreenScale.Y);
                 }
 
                 if (MyGun != null)

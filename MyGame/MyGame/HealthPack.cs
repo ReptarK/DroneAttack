@@ -25,7 +25,7 @@ namespace AtelierXNA
         public HealthPack(Game game, float homothétieInitiale, Vector3 rotationInitiale, Vector3 positionInitiale, string nomTextureCube, Vector3 dimension, float intervalMAJ) 
             : base(game, homothétieInitiale, rotationInitiale, positionInitiale, nomTextureCube, dimension,intervalMAJ)
         {
-            boiteDeCollision = new BoundingBox(PositionInitiale, PositionInitiale + dimension);
+            boiteDeCollision = new BoundingBox(PositionInitiale - dimension / 2, PositionInitiale + dimension / 2);
         }
         public override void Initialize()
         {

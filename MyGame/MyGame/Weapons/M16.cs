@@ -28,6 +28,8 @@ namespace MyGame.Weapons
         const int MUNITIONS = 30;
         const int TOTAL_MUNITIONS = 230;
         const float TEMPS_RELOAD = 2.03f;
+        public override int MunitionsParPack { get { return 30; } }
+        
 
         public const int PRIX = 6000;
 
