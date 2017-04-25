@@ -284,7 +284,9 @@ namespace MyGame.Entités
                     positionTir = positionTirTemp;
                     if (ListeNormales[indexNormales].X != 0)
                         rotationBullet = new Vector3(0, (float)Math.PI / 2f, (float)Math.PI / 2f);
-                    else
+                    if (ListeNormales[indexNormales].Y != 0)
+                        rotationBullet = new Vector3((float)Math.PI / 2f, 0, (float)Math.PI / 2f);
+                    if (ListeNormales[indexNormales].Z != 0)
                         rotationBullet = Vector3.Zero;
                 }
                 ++indexNormales;
