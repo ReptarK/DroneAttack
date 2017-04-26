@@ -14,6 +14,7 @@ namespace MyGame
 {
     public class TrouDeBalle : PlanTexturé
     {
+
         float TempsDisparaitre;
         /// <summary>
         /// 
@@ -26,8 +27,12 @@ namespace MyGame
             TempsDisparaitre = tempsDisparaitre;
         }
 
+        DepthStencilState tampon;
+        DepthStencilState jeuDepthStencilState;
         public override void Initialize()
         {
+            jeuDepthStencilState = new DepthStencilState();
+            jeuDepthStencilState.DepthBufferEnable = false;
             base.Initialize();
         }
 
@@ -41,6 +46,14 @@ namespace MyGame
                 GameController.ListeDrawableComponents.Remove(this);
                 Game.Components.Remove(this);
             }
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            tampon = GraphicsDevice.DepthStencilState;
+            GraphicsDevice.DepthStencilState = jeuDepthStencilState;
+            base.Draw(gameTime);
+            GraphicsDevice.DepthStencilState = tampon;
         }
     }
 }

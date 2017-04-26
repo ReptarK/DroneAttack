@@ -53,12 +53,8 @@ namespace MyGame.Weapons
                     MyGun = GameController.MyPlayer.MyGun;
 
                     ZoneAffichageGun = GameController.MyPlayer.MyGun.ZoneAffichageGun;
-                    ZoneAffichageGun.Width = (int)(ZoneAffichageGun.Width * Ecran.ScreenScale.X);
-                    ZoneAffichageGun.Height = (int)(ZoneAffichageGun.Height * Ecran.ScreenScale.Y);
 
                     ZoneAffichageScoped = GameController.MyPlayer.MyGun.ZoneAffichageScoped;
-                    ZoneAffichageScoped.Width = (int)(ZoneAffichageScoped.Width * Ecran.ScreenScale.X);
-                    ZoneAffichageScoped.Height = (int)(ZoneAffichageScoped.Height * Ecran.ScreenScale.Y);
                 }
 
                 if (MyGun != null)

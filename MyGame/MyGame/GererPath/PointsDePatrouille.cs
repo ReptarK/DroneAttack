@@ -58,6 +58,7 @@ namespace MyGame
             Case Case28 = new Case(new Vector3(464, 10, 275), null); ListePoints.Add(Case28);
             Case Case29 = new Case(new Vector3(460, 10, 375), null); ListePoints.Add(Case29);
             Case Case30 = new Case(new Vector3(460, 10, 471), null); ListePoints.Add(Case30);
+            Case Case31 = new Case(new Vector3(14, 10, 21), null); ListePoints.Add(Case31);
 
             //Spawn
             Case Spawn1 = new Case(new Vector3(248, 100, 600), null); ListePoints.Add(Spawn1); ListeSpawns.Add(Spawn1);
@@ -96,6 +97,7 @@ namespace MyGame
 
             listeParents.Add(Case2);
             listeParents.Add(Case11);
+            listeParents.Add(Case31);
             Case1.ListeParents = listeParents;
             listeParents = new List<Case>();
 
@@ -282,6 +284,10 @@ namespace MyGame
             listeParents.Add(Case19);
             listeParents.Add(Case29);
             Case30.ListeParents = listeParents;
+            listeParents = new List<Case>();
+
+            listeParents.Add(Case2);
+            Case31.ListeParents = listeParents;
             listeParents = new List<Case>();
 
             //listeParents.Add(Case2);

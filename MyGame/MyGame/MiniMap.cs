@@ -15,6 +15,7 @@ namespace MyGame
 {
     public class MiniMap : Microsoft.Xna.Framework.DrawableGameComponent, Overlay
     {
+        Screen Ecran;
         protected SpriteBatch GestionSprites { get; private set; }
         protected RessourcesManager<Texture2D> GestionnaireDeTextures { get; set; }
         protected RessourcesManager<Texture2D> GestionnaireDeTexturesMap { get; set; }
@@ -40,7 +41,7 @@ namespace MyGame
         public MiniMap(Game game, Rectangle zoneAffichage, string nomTexture, Color couleur)
             : base(game)
         {
-            ZoneAffichage = zoneAffichage;
+            ZoneAffichage = zoneAffichage;           
             NomTexture = nomTexture;
             Couleur = couleur;
             Scale = new Vector2(zoneAffichage.Width / Data.DimentionCarte.X, zoneAffichage.Height / Data.DimentionCarte.Z);
@@ -64,6 +65,7 @@ namespace MyGame
             GestionSprites = Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
             GestionnaireDeTextures = Game.Services.GetService(typeof(RessourcesManager<Texture2D>)) as RessourcesManager<Texture2D>;
             GestionnaireDeTexturesMap = new RessourcesManager<Texture2D>(Game, "Textures/MiniMap");
+            Ecran = Game.Services.GetService(typeof(Screen)) as Screen;
         }
 
         float TempsÉcoulé;
@@ -84,10 +86,8 @@ namespace MyGame
         public override void Draw(GameTime gameTime)
         {
                 GestionSprites.Begin();
-
                 GestionSprites.Draw(TextureMiniMap, ZoneAffichage, null, Color.White, 0, Vector2.Zero, SpriteEffects.FlipHorizontally, 0);
                 GestionSprites.Draw(TextureDot, ZoneAffichageDot, Color.White);
-
                 GestionSprites.End();
         }
     }

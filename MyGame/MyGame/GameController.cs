@@ -245,7 +245,7 @@ namespace MyGame
                     {
                         if (Game.Components.Contains(HitMark))
                             HitMark.Alpha = 1;
-                        elseTrouDeBalle(Game, 0.1f, rotationBulletHole, positionTir, new Vector2(10, 10), new Vector2(10, 10), "BulletHole", Data.INTERVALLE_MAJ_BASE, 5f)
+                        else
                         {
                             HitMark.Initialize();
                             Game.Components.Add(HitMark);

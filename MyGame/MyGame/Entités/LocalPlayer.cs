@@ -94,7 +94,7 @@ namespace MyGame.Entités
 
             AncienGun = MyGun;
 
-            Monney = 500;
+            Monney = 1000000;
             Health = 100;
         }
 
@@ -112,6 +112,8 @@ namespace MyGame.Entités
         {
             TexteArgent = new MonneyTexte(Game, "Argent : " + Monney.ToString(), "Pescadero", new Vector2(20, Ecran.CenterScreen.Y / 2), Color.White);
             BarreDeVie = new HealthBar(Game, new Rectangle(20, (int)(Ecran.CenterScreen.Y * 1.5f), 100 * (int)(health / 100), 10), "HealthBar", Color.Red);
+            //BarreDeVie.ZoneAffichage.Width *= (int)Ecran.ScreenScale.X;
+            //BarreDeVie.ZoneAffichage.Height *= (int)Ecran.ScreenScale.Y;
             GestionnaireDeMunitions = new GestionnaireAmmo(Game, Rectangle.Empty, "ammoIcon", Color.White);
 
             Game.Components.Add(TexteArgent);

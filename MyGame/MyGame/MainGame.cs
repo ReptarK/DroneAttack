@@ -53,6 +53,7 @@ namespace AtelierXNA
 
         public MainGame()
         {
+            InitialiserEcran();
             GetMap();
             PériphériqueGraphique = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -60,8 +61,8 @@ namespace AtelierXNA
             PériphériqueGraphique.SynchronizeWithVerticalRetrace = true;
             IsFixedTimeStep = true;
             IsMouseVisible = true;
-            //PériphériqueGraphique.PreferredBackBufferWidth = 1900;
-            //PériphériqueGraphique.PreferredBackBufferHeight = 1080;
+            //PériphériqueGraphique.PreferredBackBufferWidth = (int)Ecran.Resolution.X;
+            //PériphériqueGraphique.PreferredBackBufferHeight = (int)Ecran.Resolution.Y;
 
             PériphériqueGraphique.IsFullScreen = false;
 
@@ -95,7 +96,7 @@ namespace AtelierXNA
 
         void InitialiserServices()
         {
-            InitialiserEcran();
+            //InitialiserEcran();
             Services.AddService(typeof(Random), new Random());
             Services.AddService(typeof(RessourcesManager<SpriteFont>), new RessourcesManager<SpriteFont>(this, "Fonts"));
             Services.AddService(typeof(RessourcesManager<SoundEffect>), new RessourcesManager<SoundEffect>(this, "Sounds"));
