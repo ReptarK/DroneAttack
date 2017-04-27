@@ -87,7 +87,7 @@ namespace AtelierXNA
         public override void Draw(GameTime gameTime)
         {
             JeuRasterizerState = new RasterizerState();
-            JeuRasterizerState.CullMode = CullMode.None;
+            JeuRasterizerState.CullMode = CullMode.CullClockwiseFace;
             GraphicsDevice.RasterizerState = JeuRasterizerState;
 
             base.Draw(gameTime);

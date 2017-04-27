@@ -27,12 +27,16 @@ namespace MyGame
             TempsDisparaitre = tempsDisparaitre;
         }
 
-        DepthStencilState tampon;
+        DepthStencilState tamponDepth;
         DepthStencilState jeuDepthStencilState;
+        RasterizerState tamponRasterizer;
+        RasterizerState JeuRasterizerState;
         public override void Initialize()
         {
+            JeuRasterizerState = new RasterizerState();
             jeuDepthStencilState = new DepthStencilState();
             jeuDepthStencilState.DepthBufferEnable = false;
+            JeuRasterizerState.CullMode = CullMode.CullClockwiseFace;
             base.Initialize();
         }
 
@@ -50,10 +54,13 @@ namespace MyGame
 
         public override void Draw(GameTime gameTime)
         {
-            tampon = GraphicsDevice.DepthStencilState;
+            tamponDepth = GraphicsDevice.DepthStencilState;
+            tamponRasterizer = GraphicsDevice.RasterizerState;
             GraphicsDevice.DepthStencilState = jeuDepthStencilState;
+            GraphicsDevice.RasterizerState = JeuRasterizerState;
             base.Draw(gameTime);
-            GraphicsDevice.DepthStencilState = tampon;
+            GraphicsDevice.DepthStencilState = tamponDepth;
+            GraphicsDevice.RasterizerState = tamponRasterizer;
         }
     }
 }

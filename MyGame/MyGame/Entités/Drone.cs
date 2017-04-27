@@ -57,40 +57,6 @@ namespace AtelierXNA
 
         public bool ADétruire { get; set; }
 
-        //protected BoundingBox UpdateBoiteCollision(Model model, Matrix worldTransform)
-        //{
-        //    // Initialize minimum and maximum corners of the bounding box to max and min values
-        //    Vector3 min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
-        //    Vector3 max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
-
-        //    // For each mesh of the model
-        //    foreach (ModelMesh mesh in model.Meshes)
-        //    {
-        //        foreach (ModelMeshPart meshPart in mesh.MeshParts)
-        //        {
-        //            // Vertex buffer parameters
-        //            int vertexStride = meshPart.VertexBuffer.VertexDeclaration.VertexStride;
-        //            int vertexBufferSize = meshPart.NumVertices * vertexStride;
-
-        //            // Get vertex data as float
-        //            float[] vertexData = new float[vertexBufferSize / sizeof(float)];
-        //            meshPart.VertexBuffer.GetData<float>(vertexData);
-
-        //            // Iterate through vertices (possibly) growing bounding box, all calculations are done in world space
-        //            for (int i = 0; i < vertexBufferSize / sizeof(float); i += vertexStride / sizeof(float))
-        //            {
-        //                Vector3 transformedPosition = Vector3.Transform(new Vector3(vertexData[i], vertexData[i + 1], vertexData[i + 2]), worldTransform);
-
-        //                min = Vector3.Min(min, transformedPosition);
-        //                max = Vector3.Max(max, transformedPosition);
-        //            }
-        //        }
-        //    }
-
-        //    // Create and return bounding box
-        //    return new BoundingBox(min, max);
-        //}
-
         void CreerListeDesBoites()
         {
             foreach (ModelMesh maillage in Modèle.Meshes)
@@ -128,7 +94,8 @@ namespace AtelierXNA
         const float RADIUS_TIR = 100;
         protected BoundingSphere UpdateSphereDeTir()
         {
-            sphereDeTir.Center = Position;
+            BoundingSphere b = SphèreDuDrone.Transform(GetMonde());
+            sphereDeTir.Center = b.Center;
 
             return sphereDeTir;
         }
@@ -366,10 +333,8 @@ namespace AtelierXNA
             {
                 BoundingSphere sphereCentreDrone = SphèreDuDrone.Transform(Monde);
                 sphereCentreDrone.Center += Vector3.UnitY * 3;
-                Game.Components.Add(new RayonLaserCylindrique(Game, 1, Vector3.Zero, sphereCentreDrone.Center, Vector3.Normalize(CaméraJeu.Position - new Vector3(0, 15, 0) - Position),
-                    new Vector2(0.1f, Vector3.Distance(CaméraJeu.Position, Position)), new Vector2(10, 10), "RedScreen", 0.01f, 0.1f));
-                //Game.Components.Add(new RayonLaserCylindrique(Game, 1, Vector3.Zero, Position + (BoiteDeCollision.Max - BoiteDeCollision.Min) / 2, Vector3.Normalize(CaméraJeu.Position - new Vector3(0, 15, 0) - Position),
-                //    new Vector2(0.1f, Vector3.Distance(CaméraJeu.Position, Position)), new Vector2(10, 10), "RedScreen", 0.01f, 0.1f));
+                Game.Components.Add(new RayonLaserCylindrique(Game, 1, Vector3.Zero, sphereCentreDrone.Center, Vector3.Normalize(CaméraJeu.Position - new Vector3(0, 15, 0) - sphereCentreDrone.Center),
+                    new Vector2(0.1f, Vector3.Distance(CaméraJeu.Position, sphereCentreDrone.Center)), new Vector2(10, 10), "RedScreen", 0.01f, 0.1f));
                 if (GenerateurRandom.Next(0, Data.ChanceDeTir) == 0)
                 {
                     BulletHit.Play(0.3f, 0, 0);
@@ -388,7 +353,7 @@ namespace AtelierXNA
         {
             BoundingSphere sphereCentreDrone = SphèreDuDrone.Transform(Monde);
             sphereCentreDrone.Center += Vector3.UnitY * 3;
-            Ray DroneRay;
+            Ray DroneRay = new Ray(sphereCentreDrone.Center, Vector3.Normalize(sphereCentreDrone.Center) - CaméraJeu.Position);
             List<BoundingBox> ListeBoundingBox = new List<BoundingBox>();
 
             PlayerDistance = Vector3.Distance(sphereCentreDrone.Center, CaméraJeu.Position);
@@ -396,9 +361,9 @@ namespace AtelierXNA
 
             if (SphereDeTir.Intersects(MyPlayer.BoiteDeCollision))
             {
-                foreach (ICollisionableList c in GameController.ListMurs)
+                foreach (ICollisionableList m in GameController.ListMurs)
                 {
-                    foreach (BoundingBox b in c.ListeBoundingBox)
+                    foreach (BoundingBox b in m.ListeBoundingBox)
                     {
                         if (DroneRay.Intersects(b) != null)
                             ListeBoundingBox.Add(b);
@@ -408,7 +373,7 @@ namespace AtelierXNA
 
                 foreach (BoundingBox b in ListeBoundingBox)
                 {
-                    WallDistance = Vector3.Distance(GetRayBoundingBoxIntersectionPoint(DroneRay, b), CaméraJeu.Position);
+                    WallDistance = Vector3.Distance(GetRayBoundingBoxIntersectionPoint(DroneRay, b), sphereCentreDrone.Center);
 
                     if (WallDistance < PlayerDistance)
                         return false;

@@ -184,6 +184,7 @@ namespace AtelierXNA
 
         public override void Draw(GameTime gameTime)
         {
+            CalculerMatriceMonde();
             BlendState oldBlendState = GraphicsDevice.BlendState;
             RasterizerState oldRendu = GraphicsDevice.RasterizerState;
             RasterizerState NewRendu = new RasterizerState();

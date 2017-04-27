@@ -45,7 +45,7 @@ namespace MyGame
 
             health = MyPlayer.Health;
 
-            ZoneBase = new Rectangle(17, (int)(Ecran.CenterScreen.Y * 1.9f) - 3, 104, 16);
+            ZoneBase = new Rectangle(17, (int)(Ecran.CenterScreen.Y * 1.9f) - 3, 106, 16);
             ZoneHealth = new Rectangle(20, (int)(Ecran.CenterScreen.Y * 1.9f), (int)(100 * (health / 100f)), 10);
             ZoneBase.Width *= (int)Ecran.ScreenScale.X;
             ZoneBase.Height *= (int)Ecran.ScreenScale.Y;

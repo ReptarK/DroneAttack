@@ -94,7 +94,7 @@ namespace MyGame.Entités
 
             AncienGun = MyGun;
 
-            Monney = 1000000;
+            Monney = 500;
             Health = 100;
         }
 
@@ -202,48 +202,8 @@ namespace MyGame.Entités
 
         void UpdatePosition()
         {
-            if (Caméra1stPerson.EstSol)
-            {
-                Position.Y = 0;
-            }
-
             Position = CaméraJeu.Position - (Vector3.UnitY * Caméra1stPerson.HAUTEUR_PLAYER);
         }
-
-
-
-
-        //public bool EstEnCollision(Drone drone)
-        //{
-        //    float DroneDistance;
-        //    float WallDistance;
-        //    Ray myRay = GetPlayerRay;
-        //    List<BoundingBox> ListeBoundingBox = new List<BoundingBox>();
-        //    if (myRay.Intersects(drone.BoiteDeCollision) != null)
-        //    {
-        //        foreach (ICollisionableList c in GameController.ListMurs)
-        //        {
-        //            foreach (BoundingBox b in c.ListeBoundingBox)
-        //            {
-        //                if (myRay.Intersects(b) != null)
-        //                    ListeBoundingBox.Add(b);
-        //            }
-        //        }
-
-        //        DroneDistance = Vector3.Distance(drone.Position, CaméraJeu.Position);
-        //        foreach (BoundingBox b in ListeBoundingBox)
-        //        {
-        //            WallDistance = Vector3.Distance(GetRayBoundingBoxIntersectionPoint(myRay, b), CaméraJeu.Position);
-
-        //            if (WallDistance < DroneDistance)
-        //            {
-        //                return false;
-        //            }
-        //        }
-        //        return true;
-        //    }
-        //    return false;
-        //}
 
         public bool EstEnCollision(Drone drone, out Vector3 positionTir, out Vector3 rotationBullet)
         {
@@ -285,11 +245,17 @@ namespace MyGame.Entités
                     TirDistance = TirDistanceTemp;
                     positionTir = positionTirTemp;
                     if (ListeNormales[indexNormales].X != 0)
+                    {
                         rotationBullet = new Vector3(0, (float)Math.PI / 2f, (float)Math.PI / 2f);
+                    }
                     if (ListeNormales[indexNormales].Y != 0)
+                    {
                         rotationBullet = new Vector3((float)Math.PI / 2f, 0, (float)Math.PI / 2f);
+                    }
                     if (ListeNormales[indexNormales].Z != 0)
+                    {
                         rotationBullet = Vector3.Zero;
+                    }
                 }
                 ++indexNormales;
             }

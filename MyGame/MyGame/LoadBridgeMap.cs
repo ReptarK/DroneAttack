@@ -313,8 +313,6 @@ namespace MyGame
             ListeDePack.Add(ammoPack);
 
             // Pipes au fond 
-
-
             GameController.ListeDrawableComponents.Add(new Afficheur3D(Game));
             GameController.ListeDrawableComponents.Add(new ObjetDeBase(Game, "kulmaputki", 0.10f, Vector3.Zero, new Vector3(484, 2.5f, 490)));
             GameController.ListeDrawableComponents.Add(new ObjetDeBase(Game, "kulmaputki", 0.10f, Vector3.Zero, new Vector3(484, 2.5f, 475)));
@@ -328,6 +326,8 @@ namespace MyGame
             GameController.ListeDrawableComponents.Add(new ObjetDeBase(Game, "kulmaputki", 0.10f, Vector3.Zero, new Vector3(484, 2.5f, 25)));
             GameController.ListeDrawableComponents.Add(new ObjetDeBase(Game, "kulmaputki", 0.10f, Vector3.Zero, new Vector3(484, 2.5f, 40)));
             GameController.ListeDrawableComponents.Add(new ObjetDeBase(Game, "Earth", 7f, new Vector3((float)Math.PI,(float)Math.PI,0), new Vector3(450, 200f, 450)));
+
+            //GameController.ListeDrawableComponents.Add(new Tourelle(Game, "turret", 1, Vector3.Zero, new Vector3(135, 0, 103), Data.INTERVALLE_MAJ_BASE, Color.White));
 
 
             GameController.ListeDrawableComponents.Add(MyPlayer);
