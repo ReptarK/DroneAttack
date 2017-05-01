@@ -32,10 +32,6 @@ namespace MyGame
         {
         }
 
-        /// <summary>
-        /// Allows the game component to perform any initialization it needs to before starting
-        /// to run.  This is where it can query for any required services and load content.
-        /// </summary>
         public override void Initialize()
         {
             base.Initialize();
@@ -60,15 +56,20 @@ namespace MyGame
         }
 
 
+        float TempsÉcoulé;
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            if(health != MyPlayer.Health)
+            if ((TempsÉcoulé += (float)gameTime.ElapsedGameTime.TotalSeconds) > Data.INTERVALLE_MAJ_BASE)
             {
-                health = MyPlayer.Health;
+                TempsÉcoulé = 0;
+                if (health != MyPlayer.Health)
+                {
+                    health = MyPlayer.Health;
 
-                ZoneHealth = new Rectangle(20, (int)(Ecran.CenterScreen.Y * 1.9f), (int)(100 * (health / 100f)), 10);
+                    ZoneHealth = new Rectangle(20, (int)(Ecran.CenterScreen.Y * 1.9f), (int)(100 * (health / 100f)), 10);
+                }
             }
         }
 

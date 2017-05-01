@@ -30,6 +30,8 @@ namespace MyGame
 
         public bool ADétruire { get; set; }
 
+        int RoundActivée;
+
         public BoundingSphere SphereDeTir;
 
 
@@ -46,6 +48,7 @@ namespace MyGame
             LaserSound = GestionnaireDeSons.Find("Laser");
 
             SphereDeTir = new BoundingSphere(Position, RAYON_TIR);
+            RoundActivée = GameController.WaveNo;
 
         }
 
@@ -58,9 +61,18 @@ namespace MyGame
 
         public int compteurWave = 0;
         float TempsÉcouléTir = 0;
+        float TempsÉcouléDestruction;
+        const int WAVE_DURATION = 8;
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if ((TempsÉcouléDestruction += (float)gameTime.ElapsedGameTime.TotalSeconds) > 1)
+            {
+                if((RoundActivée + WAVE_DURATION) == GameController.WaveNo)
+                {
+                    Game.Components.Remove(this);
+                }
+            }
 
             if ((TempsÉcouléTir += (float)gameTime.ElapsedGameTime.TotalSeconds) > TEMPS_TIR)
             {
@@ -79,10 +91,10 @@ namespace MyGame
                 if (EstEnCollision(d) && CanShoot)
                 {
                     CanShoot = false;
-                    Game.Components.Add(new RayonLaserCylindrique(Game, 1, Vector3.Zero, SphereDeTir.Center, Vector3.Normalize(d.Position - SphereDeTir.Center),
-                    new Vector2(0.1f, 100), new Vector2(10, 10), "GreenScreen", 0.01f, 0.1f));
+                    //Game.Components.Add(new RayonLaserCylindrique(Game, 1, Vector3.Zero, SphereDeTir.Center, Vector3.Normalize(d.Position - SphereDeTir.Center),
+                    //new Vector2(0.1f, 100), new Vector2(10, 10), "GreenScreen", 0.01f, 0.1f));
                     LaserSound.Play(0.3f, 0, 0);
-                    d.Health -= Degats;
+                    d.Health -= d.Health;
                 }
             }
 
@@ -92,7 +104,6 @@ namespace MyGame
         float WallDistance;
         public bool EstEnCollision(Drone drone)
         {
-            //Position += Vector3.UnitY * 3;
             SphereDeTir.Transform(GetMonde());
             if (SphereDeTir.Intersects(drone.BoiteDeCollision))
             {

@@ -83,7 +83,7 @@ namespace MyGame.Weapons
                     Game.Components.Add(new FadeTexture(Game, new Rectangle(Ecran.CenterScreen.X + 92, Ecran.CenterScreen.Y + 68, 45, 45), "blast", Color.White, 0.01f));
                 }
 
-                GunShot.Play(0.3f, 0, 0);
+                GunShot.Play(0.1f, 0, 0);
                 LocalPlayer.EstShoot = true;
                 Munitions--;
                 Temps…coulÈShoot = 0;

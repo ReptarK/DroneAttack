@@ -30,6 +30,7 @@ namespace MyGame.Entités
 
         public static bool EstShoot;
         public static bool EstScoped;
+        public static bool HaveTurret;
 
         public int Monney;
         public Gun MyGun;
@@ -80,6 +81,7 @@ namespace MyGame.Entités
             GenerateurRandom = Game.Services.GetService(typeof(Random)) as Random;
             CreerWalkingSounds();
             JumpSound = GestionnaireDeSons.Find("Jump");
+            HaveTurret = false;
             UpdateOrder = 110;
 
             InitialiserLocalPlayer();
@@ -116,6 +118,8 @@ namespace MyGame.Entités
             //BarreDeVie.ZoneAffichage.Height *= (int)Ecran.ScreenScale.Y;
             GestionnaireDeMunitions = new GestionnaireAmmo(Game, Rectangle.Empty, "ammoIcon", Color.White);
 
+            GestionnaireDeTourelle AffichageTourelle = new GestionnaireDeTourelle(Game, new Rectangle(Ecran.CenterScreen.X * 2 - 60, Ecran.CenterScreen.Y, 50, 50), "CadreTourelle", Color.White);
+
             Game.Components.Add(TexteArgent);
             GameController.ListeDrawableComponents.Add(TexteArgent);
 
@@ -124,6 +128,11 @@ namespace MyGame.Entités
 
             Game.Components.Add(GestionnaireDeMunitions);
             GameController.ListeDrawableComponents.Add(GestionnaireDeMunitions);
+
+            Game.Components.Add(AffichageTourelle);
+            GameController.ListeDrawableComponents.Add(AffichageTourelle);
+
+
         }
 
         Ray UpdatePlayerRay()
@@ -154,6 +163,7 @@ namespace MyGame.Entités
             {
                 UpdatePosition();
                 GererJump();
+                GererTourelle();
                 TempsÉcoulé = 0;
             }
 
@@ -188,6 +198,20 @@ namespace MyGame.Entités
             {
                 DoOnce = true;
                 JumpSound.Play(0.5f, 0, 0);
+            }
+        }
+
+        void GererTourelle()
+        {
+            if(HaveTurret && Caméra1stPerson.EstSol)
+            {
+                if(GestionInput.EstEnfoncée(Keys.T))
+                {
+                    HaveTurret = false;
+                    Tourelle tourelle = new Tourelle(Game, "turret", 1, Vector3.Zero, new Vector3(Position.X, 0, Position.Z), Data.INTERVALLE_MAJ_BASE, Color.White);
+                    GameController.ListeDrawableComponents.Add(tourelle);
+                    Game.Components.Add(tourelle);
+                }
             }
         }
 

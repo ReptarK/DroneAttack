@@ -64,8 +64,8 @@ namespace AtelierXNA
             //PériphériqueGraphique.PreferredBackBufferWidth = (int)Ecran.Resolution.X;
             //PériphériqueGraphique.PreferredBackBufferHeight = (int)Ecran.Resolution.Y;
 
-            PériphériqueGraphique.IsFullScreen = true;
-
+            PériphériqueGraphique.IsFullScreen = false;
+            
             MainGameState = GameState.Menu;
 
             EstSourisActive = true;

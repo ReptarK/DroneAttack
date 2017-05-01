@@ -18,7 +18,7 @@ namespace MyGame.Composants_de_base
         protected RessourcesManager<SpriteFont> GestionnaireDeFonts;
 
         protected SpriteFont Font;
-        protected string Texte;
+        public string Texte;
         protected string NomFont;
         protected Vector2 Position;
         protected Color Couleur;

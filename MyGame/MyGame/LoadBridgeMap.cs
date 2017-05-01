@@ -274,6 +274,11 @@ namespace MyGame
             positionCadre = new Vector3(11 + dimensionCadre, 32f, 84.2f);
             GameController.ListeDrawableComponents.Add(new PlanTexturé(Game, 1f, Vector3.Zero, positionCadre, new Vector2(3 * dimensionCadre, 4), new Vector2(1, 1), "TexteParDessusCadresGuns", Data.INTERVALLE_MAJ_BASE));
 
+            positionCadre = new Vector3(4.2f, dimensionCadre, 41.5f);
+            CadreTourelle cadreTourelle = new CadreTourelle(Game, 1f, new Vector3(0, 3 * (float)Math.PI / 2, 0), positionCadre, new Vector2(dimensionCadre, dimensionCadre), new Vector2(1, 1), "CadreTourelle", Data.INTERVALLE_MAJ_BASE);
+            GameController.ListeDrawableComponents.Add(cadreTourelle);
+            Game.Components.Add(cadreTourelle);
+
             foreach (CadreGun c in GameController.ListCadresGun)
             {
                 GameController.ListeDrawableComponents.Add(c);

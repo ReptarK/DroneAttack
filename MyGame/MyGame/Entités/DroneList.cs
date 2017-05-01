@@ -15,7 +15,7 @@ namespace MyGame.Entités
     public class RedDrone : Drone
     {
         public const int IndexDrone = 0;
-        const int DEGATS_BASE = 5;
+        const int DEGATS_BASE = 4;
         Color COULEUR_BASE = Color.Red;
         const float HEALTH_BASE_COOEFICIENT = 1f;
 
@@ -57,7 +57,7 @@ namespace MyGame.Entités
     public class BlueDrone : Drone
     {
         public const int IndexDrone = 2;
-        const int DEGATS_BASE = 8;
+        const int DEGATS_BASE = 6;
         const float HEALTH_BASE_COOEFICIENT = 2f;
         Color COULEUR_BASE = Color.Blue;
 
@@ -78,16 +78,16 @@ namespace MyGame.Entités
     public class InvisibleDrone : Drone
     {
         public const int IndexDrone = 3;
-        const int DEGATS_BASE = 5;
+        const int DEGATS_BASE = 4;
         Color COULEUR_BASE = Color.Black;
-        const float HEALTH_BASE_COOEFICIENT = 1f;
+        const float HEALTH_BASE_COOEFICIENT = 0.8f;
 
         public InvisibleDrone(Game jeu, string nomModèle, float échelleInitiale, Vector3 rotationInitiale, Vector3 positionInitiale, float intervalleMAJ, Color couleur, Case startCase, float divisionDeplacement, int health)
             : base(jeu, nomModèle, échelleInitiale, rotationInitiale, positionInitiale, intervalleMAJ, couleur, startCase, divisionDeplacement, health)
         {
             GenerateurRandom = Game.Services.GetService(typeof(Random)) as Random;
             Degats = DEGATS_BASE;
-            DivisionDeplacement = GenerateurRandom.Next(60, 70);
+            DivisionDeplacement = GenerateurRandom.Next(70, 80);
             Health = (int)(Health * HEALTH_BASE_COOEFICIENT);
         }
 

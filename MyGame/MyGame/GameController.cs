@@ -175,18 +175,19 @@ namespace MyGame
                     if (MyPlayer.MyGun != null)
                         GererDrones(gameTime);
                     TempsÉcoulé = 0;
+
+                    if (MortPlayerMenu.ShowDeathRecap)
+                    {
+                        foreach (DrawableGameComponent o in Game.Components.Where(c => c is DrawableGameComponent && c is Overlay))
+                        {
+                            o.Enabled = false;
+                            o.Visible = false;
+                        }
+                        MainGame.MainGameState = MainGame.GameState.Menu;
+                        MenuController.State = MenuController.MenuState.ScoreBoard;
+                    }
                 }
 
-                if (MortPlayerMenu.ShowDeathRecap)
-                {
-                    foreach (DrawableGameComponent o in Game.Components.Where(c => c is DrawableGameComponent && c is Overlay))
-                    {
-                        o.Enabled = false;
-                        o.Visible = false;
-                    }
-                    MainGame.MainGameState = MainGame.GameState.Menu;
-                    MenuController.State = MenuController.MenuState.ScoreBoard;
-                }
             }
 
             base.Update(gameTime);
@@ -211,10 +212,6 @@ namespace MyGame
             Caméra1stPerson.EstLadder = false;
             foreach (ILadder l in Game.Components.Where(c => c is ILadder))
             {
-                if (GestionInput.EstEnfoncée(Keys.B))
-                {
-                    MyPlayer.Position += Vector3.Zero;
-                }
                 if (MyPlayer.BoiteDeCollision.Intersects(l.BoiteDeCollision))
                 {
                     Caméra1stPerson.EstLadder = true;
@@ -226,9 +223,9 @@ namespace MyGame
                 if (MyPlayer.BoiteDeCollision.Intersects(c.BoiteDeCollision) && !c.EstDétruit)
                 {
                     if (MyPlayer.Health < 100 && c is HealthPack)
-                        MyPlayer.Health += 20;
+                        MyPlayer.Health += 25;
                     if (c is AmmoPack)
-                        MyPlayer.MyGun.TotalMunitions += MyPlayer.MyGun.MunitionsParLoad;
+                        MyPlayer.MyGun.TotalMunitions += MyPlayer.MyGun.MunitionsParLoad * 3;
 
                     c.EstDétruit = true;
                 }
@@ -294,28 +291,32 @@ namespace MyGame
         public static int WaveNo = 1;
         SoundEffect ChangeWaveSong;
         bool bCheck = true;
-
+        float TempsÉcouléSpawn;
         void GererDrones(GameTime gameTime)
         {
-            if (PlayState == InGameState.NewWave)
+            if((TempsÉcouléSpawn += (float)gameTime.ElapsedGameTime.TotalSeconds) > 0.6f)
             {
-                if (compteurDroneSpawn < NbDronesParWave)
+                TempsÉcouléSpawn = 0;
+                if (PlayState == InGameState.NewWave)
                 {
-                    bCheck = true;
-                    ++compteurDroneSpawn;
-                    SpawnNewRandomDrone();
+                    if (compteurDroneSpawn < NbDronesParWave)
+                    {
+                        bCheck = true;
+                        ++compteurDroneSpawn;
+                        SpawnNewRandomDrone();
+                    }
+                    else
+                        PlayState = InGameState.Play;
                 }
-                else
-                    PlayState = InGameState.Play;
-            }
 
-            if (bCheck && NbDronesRestants == 0)
-            {
-                ChangeWaveSong.Play(0.3f, 0, 0);
-                bCheck = false;
-                WaveNo++;
-                PlayState = InGameState.NewWave;
-                compteurDroneSpawn = 0;
+                if (bCheck && NbDronesRestants == 0)
+                {
+                    ChangeWaveSong.Play(0.3f, 0, 0);
+                    bCheck = false;
+                    WaveNo++;
+                    PlayState = InGameState.NewWave;
+                    compteurDroneSpawn = 0;
+                }
             }
         }
 
