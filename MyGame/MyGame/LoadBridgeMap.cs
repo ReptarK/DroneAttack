@@ -95,8 +95,10 @@ namespace MyGame
 
             positionMur = new Vector3(0, 0, 85);
             GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(50, 35, largeurMur / 2)));
-            positionMur = new Vector3(50, 0, 65 + largeurMur / 2);
-            GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurMur / 2, 35, 20)));
+            //positionMur = new Vector3(50, 0, 65 + largeurMur / 2);
+            //GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurMur / 2, 35, 20)));
+            positionMur = new Vector3(50, 0, 63 + largeurMur / 2);
+            GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurMur / 2, 35, 22)));
 
 
             //MARCHES
@@ -274,8 +276,8 @@ namespace MyGame
             positionCadre = new Vector3(11 + dimensionCadre, 32f, 84.2f);
             GameController.ListeDrawableComponents.Add(new PlanTexturé(Game, 1f, Vector3.Zero, positionCadre, new Vector2(3 * dimensionCadre, 4), new Vector2(1, 1), "TexteParDessusCadresGuns", Data.INTERVALLE_MAJ_BASE));
 
-            positionCadre = new Vector3(4.2f, dimensionCadre, 41.5f);
-            CadreTourelle cadreTourelle = new CadreTourelle(Game, 1f, new Vector3(0, 3 * (float)Math.PI / 2, 0), positionCadre, new Vector2(dimensionCadre, dimensionCadre), new Vector2(1, 1), "CadreTourelle", Data.INTERVALLE_MAJ_BASE);
+            positionCadre = new Vector3(49.5f, dimensionCadre, 76.5f);
+            CadreTourelle cadreTourelle = new CadreTourelle(Game, 1f, new Vector3((float)Math.PI, 1.5f * (float)Math.PI, (float)Math.PI), positionCadre, new Vector2(dimensionCadre * 0.9f, dimensionCadre * 1.5f), new Vector2(1, 1), "CadreTourelle", Data.INTERVALLE_MAJ_BASE);
             GameController.ListeDrawableComponents.Add(cadreTourelle);
             Game.Components.Add(cadreTourelle);
 

@@ -154,7 +154,8 @@ namespace AtelierXNA
         {
            Monde = Matrix.Identity;
            Monde *= Matrix.CreateScale(HomothétieInitiale);
-           Monde *= Matrix.CreateWorld(Position, -CameraJeu.Direction, Vector3.Up);
+            Monde *= Matrix.CreateWorld(Position, Direction, Vector3.Up);
+            //Monde *= Matrix.CreateWorld(Position, -CameraJeu.Direction, Vector3.Up);
         }
 
         public override void Update(GameTime gameTime)
@@ -196,7 +197,7 @@ namespace AtelierXNA
             EffetDeBase.View = CameraJeu.Vue;
             EffetDeBase.Projection = CameraJeu.Projection;
 
-            foreach(EffectPass passeEffet in EffetDeBase.CurrentTechnique.Passes)
+            foreach (EffectPass passeEffet in EffetDeBase.CurrentTechnique.Passes)
             {
                 passeEffet.Apply();
                 for(int j = 0; j < NbRangées; ++j)

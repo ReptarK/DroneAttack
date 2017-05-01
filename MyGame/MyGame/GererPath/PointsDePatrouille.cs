@@ -400,12 +400,12 @@ namespace MyGame
             Case Case28 = new Case(new Vector3(328, 10, 320), null); ListePoints.Add(Case28);
             Case Case29 = new Case(new Vector3(331, 10, 425), null); ListePoints.Add(Case29);
             Case Case30 = new Case(new Vector3(356, 10, 474), null); ListePoints.Add(Case30);
-            Case Case31 = new Case(new Vector3(400, 10, 472), null); ListePoints.Add(Case31);
-            Case Case32 = new Case(new Vector3(403, 10, 378), null); ListePoints.Add(Case32);
-            Case Case33 = new Case(new Vector3(400, 10, 280), null); ListePoints.Add(Case33);
-            Case Case34 = new Case(new Vector3(474, 55, 284), null); ListePoints.Add(Case34);
-            Case Case35 = new Case(new Vector3(474, 55, 378), null); ListePoints.Add(Case35);
-            Case Case36 = new Case(new Vector3(474, 55, 472), null); ListePoints.Add(Case36);
+            Case Case31 = new Case(new Vector3(400, 20, 472), null); ListePoints.Add(Case31);
+            Case Case32 = new Case(new Vector3(403, 20, 378), null); ListePoints.Add(Case32);
+            Case Case33 = new Case(new Vector3(400, 20, 280), null); ListePoints.Add(Case33);
+            Case Case34 = new Case(new Vector3(474, 60, 284), null); ListePoints.Add(Case34);
+            Case Case35 = new Case(new Vector3(474, 60, 378), null); ListePoints.Add(Case35);
+            Case Case36 = new Case(new Vector3(474, 60, 472), null); ListePoints.Add(Case36);
             Case Case37 = new Case(new Vector3(428, 10, 228), null); ListePoints.Add(Case37);
             Case Case38 = new Case(new Vector3(375, 10, 221), null); ListePoints.Add(Case38);
             Case Case39 = new Case(new Vector3(383, 10, 141), null); ListePoints.Add(Case39);
@@ -421,18 +421,18 @@ namespace MyGame
             Case Case49 = new Case(new Vector3(296, 10, 160), null); ListePoints.Add(Case49);
             Case Case50 = new Case(new Vector3(325, 10, 248), null); ListePoints.Add(Case50);
             Case Case51 = new Case(new Vector3(345, 10, 183), null); ListePoints.Add(Case51);
-            Case Case52 = new Case(new Vector3(225, 15, 373), null); ListePoints.Add(Case52);
-            Case Case53 = new Case(new Vector3(450, 15, 480), null); ListePoints.Add(Case53);
-            Case Case54 = new Case(new Vector3(450, 15, 386), null); ListePoints.Add(Case54);
-            Case Case55 = new Case(new Vector3(450, 15, 318), null); ListePoints.Add(Case55);
+            Case Case52 = new Case(new Vector3(225, 20, 373), null); ListePoints.Add(Case52);
+            Case Case53 = new Case(new Vector3(450, 20, 480), null); ListePoints.Add(Case53);
+            Case Case54 = new Case(new Vector3(450, 20, 386), null); ListePoints.Add(Case54);
+            Case Case55 = new Case(new Vector3(450, 20, 318), null); ListePoints.Add(Case55);
             Case Case56 = new Case(new Vector3(480, 15, 260), null); ListePoints.Add(Case56);
             //Spawn
-            Case Spawn1 = new Case(new Vector3(248, 100, 600), null); ListePoints.Add(Spawn1); ListeSpawns.Add(Spawn1);
+            Case Spawn1 = new Case(new Vector3(248, 150, -100), null); ListePoints.Add(Spawn1); ListeSpawns.Add(Spawn1);
             Case Spawn2 = new Case(new Vector3(-100, 100, 284), null); ListePoints.Add(Spawn2); ListeSpawns.Add(Spawn2);
             Case Spawn3 = new Case(new Vector3(550, 150, 275), null); ListePoints.Add(Spawn3); ListeSpawns.Add(Spawn3);
 
 
-            listeParents.Add(Case20);
+            listeParents.Add(Case45);
             Spawn1.ListeParents = listeParents;
             listeParents = new List<Case>();
 

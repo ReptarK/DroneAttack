@@ -19,7 +19,7 @@ namespace MyGame
     public class Tourelle : ObjetDeDÈmo, IDestructible
     {
         const float RAYON_TIR = 100;
-        const float TEMPS_TIR = 2f;
+        const float TEMPS_TIR = 1f;
 
         RessourcesManager<SoundEffect> GestionnaireDeSons;
         SoundEffect LaserSound;
@@ -60,9 +60,9 @@ namespace MyGame
         }
 
         public int compteurWave = 0;
-        float Temps…coulÈTir = 0;
+        float Temps…coulÈSonTir = 0;
         float Temps…coulÈDestruction;
-        const int WAVE_DURATION = 8;
+        const int WAVE_DURATION = 5;
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -74,16 +74,17 @@ namespace MyGame
                 }
             }
 
-            if ((Temps…coulÈTir += (float)gameTime.ElapsedGameTime.TotalSeconds) > TEMPS_TIR)
+            if ((Temps…coulÈSonTir += (float)gameTime.ElapsedGameTime.TotalSeconds) > TEMPS_TIR)
             {
-                Temps…coulÈTir = 0;
+                Temps…coulÈSonTir = 0;
 
-                GererTir();
+                GererTir(gameTime);
             }
         }
 
         bool CanShoot;
-        void GererTir()
+        float Temps…coulÈTir;
+        void GererTir(GameTime gameTime)
         {
             CanShoot = true;
             foreach (Drone d in GameController.ListDrones)
@@ -91,8 +92,8 @@ namespace MyGame
                 if (EstEnCollision(d) && CanShoot)
                 {
                     CanShoot = false;
-                    //Game.Components.Add(new RayonLaserCylindrique(Game, 1, Vector3.Zero, SphereDeTir.Center, Vector3.Normalize(d.Position - SphereDeTir.Center),
-                    //new Vector2(0.1f, 100), new Vector2(10, 10), "GreenScreen", 0.01f, 0.1f));
+                    Game.Components.Add(new RayonLaserCylindrique(Game, 1, Vector3.Zero, SphereDeTir.Center + new Vector3(0, 10,-22), Vector3.Normalize(d.Position - SphereDeTir.Center),
+                    new Vector2(0.1f, Vector3.Distance(SphereDeTir.Center, d.Position)), new Vector2(10, 10), "GreenScreen", 0.01f, 0.1f));
                     LaserSound.Play(0.3f, 0, 0);
                     d.Health -= d.Health;
                 }

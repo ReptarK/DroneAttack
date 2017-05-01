@@ -31,7 +31,7 @@ namespace MyGame
         {
             base.Initialize();
             NbTurretTemp = LocalPlayer.NbTurret;
-            TexteNbTourelles = new TexteAvantPlan(Game, "x 0", "Lindsey", new Vector2(Ecran.CenterScreen.X * 2 - 45, Ecran.CenterScreen.Y + 50), Couleur);
+            TexteNbTourelles = new TexteAvantPlan(Game, "x 0", "Pescadero", new Vector2(Ecran.CenterScreen.X * 2 - 45, Ecran.CenterScreen.Y + 50), Couleur);
             Game.Components.Add(TexteNbTourelles);
             GameController.ListeDrawableComponents.Add(TexteNbTourelles);
         }

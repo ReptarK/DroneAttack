@@ -118,7 +118,7 @@ namespace MyGame.Entités
             //BarreDeVie.ZoneAffichage.Height *= (int)Ecran.ScreenScale.Y;
             GestionnaireDeMunitions = new GestionnaireAmmo(Game, Rectangle.Empty, "ammoIcon", Color.White);
 
-            GestionnaireDeTourelle AffichageTourelle = new GestionnaireDeTourelle(Game, new Rectangle(Ecran.CenterScreen.X * 2 - 60, Ecran.CenterScreen.Y, 50, 50), "CadreTourelle", Color.White);
+            GestionnaireDeTourelle AffichageTourelle = new GestionnaireDeTourelle(Game, new Rectangle(Ecran.CenterScreen.X * 2 - 60, Ecran.CenterScreen.Y, 50, 50), "ImageTourelle", Color.White);
 
             Game.Components.Add(TexteArgent);
             GameController.ListeDrawableComponents.Add(TexteArgent);
@@ -205,10 +205,10 @@ namespace MyGame.Entités
         {
             if(NbTurret > 0 && Caméra1stPerson.EstSol)
             {
-                if(GestionInput.EstNouvelleTouche(Keys.T))
+                if(GestionInput.EstNouvelleTouche(Keys.T) && Game.Components.Count(c => c is Tourelle) < 3)
                 {
                     NbTurret -= 1;
-                    Tourelle tourelle = new Tourelle(Game, "turret", 2, Vector3.Zero, new Vector3(Position.X, 0, Position.Z), Data.INTERVALLE_MAJ_BASE, Color.White);
+                    Tourelle tourelle = new Tourelle(Game, "turret", 2, new Vector3(0, CaméraJeu.Direction.X, 0), new Vector3(Position.X + (CaméraJeu.Direction.X * 10), 0, Position.Z + (CaméraJeu.Direction.Z * 10)), Data.INTERVALLE_MAJ_BASE, Color.White);
                     GameController.ListeDrawableComponents.Add(tourelle);
                     Game.Components.Add(new Afficheur3D(Game));
                     Game.Components.Add(tourelle);

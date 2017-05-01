@@ -77,20 +77,20 @@ namespace MyGame
             GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(498, 40, 2)));
 
             positionMur = new Vector3(500 - 2.1f, 0, 0);
-            GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(7, 100, 500)));
+            GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(7, 60, 500)));
 
             positionMur = new Vector3(-2, 0, 0);
             GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(2, 40, 498)));
 
             positionMur = new Vector3(0, 0, 500 - 2.1f);
-            GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(500, 100, 7)));
+            GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(500, 60, 7)));
 
             //MUR INTERNE
             int largeurMur = 12;
             positionMur = new Vector3(50, 0.4f, 450);
             GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurMur / 2, 35, 50)));
-            positionMur = new Vector3(30 + largeurMur / 2, 0.4f, 450 - largeurMur / 2);
-            GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(20, 35, largeurMur / 2)));
+            positionMur = new Vector3(28 + largeurMur / 2, 0.4f, 450 - largeurMur / 2);
+            GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(22, 35, largeurMur / 2)));
             positionMur = new Vector3(56, 0.4f, 225);
             GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurMur, 35, 180)));
             positionMur = new Vector3(80, 0.4f, 90);
@@ -277,6 +277,12 @@ namespace MyGame
 
             positionCadre = new Vector3(49.3f, 32f, 460 + dimensionCadre);
             GameController.ListeDrawableComponents.Add(new PlanTexturé(Game, 1f, rotation, positionCadre, new Vector2(3 * dimensionCadre, 4), new Vector2(1, 1), "TexteParDessusCadresGuns", Data.INTERVALLE_MAJ_BASE));
+
+            positionCadre = new Vector3(42, dimensionCadre, 450.7f);
+            CadreTourelle cadreTourelle = new CadreTourelle(Game, 1f, new Vector3((float)Math.PI, 0, (float)Math.PI), positionCadre, new Vector2(dimensionCadre * 0.9f, dimensionCadre * 1.5f), new Vector2(1, 1), "CadreTourelle", Data.INTERVALLE_MAJ_BASE);
+            GameController.ListeDrawableComponents.Add(cadreTourelle);
+            Game.Components.Add(cadreTourelle);
+
 
             foreach (CadreGun c in GameController.ListCadresGun)
                 GameController.ListeDrawableComponents.Add(c);
