@@ -30,7 +30,7 @@ namespace MyGame.Entités
 
         public static bool EstShoot;
         public static bool EstScoped;
-        public static bool HaveTurret;
+        public static int  NbTurret;
 
         public int Monney;
         public Gun MyGun;
@@ -81,7 +81,7 @@ namespace MyGame.Entités
             GenerateurRandom = Game.Services.GetService(typeof(Random)) as Random;
             CreerWalkingSounds();
             JumpSound = GestionnaireDeSons.Find("Jump");
-            HaveTurret = false;
+            NbTurret = 0;
             UpdateOrder = 110;
 
             InitialiserLocalPlayer();
@@ -96,7 +96,7 @@ namespace MyGame.Entités
 
             AncienGun = MyGun;
 
-            Monney = 500;
+            Monney = 16000;
             Health = 100;
         }
 
@@ -203,13 +203,14 @@ namespace MyGame.Entités
 
         void GererTourelle()
         {
-            if(HaveTurret && Caméra1stPerson.EstSol)
+            if(NbTurret > 0 && Caméra1stPerson.EstSol)
             {
-                if(GestionInput.EstEnfoncée(Keys.T))
+                if(GestionInput.EstNouvelleTouche(Keys.T))
                 {
-                    HaveTurret = false;
-                    Tourelle tourelle = new Tourelle(Game, "turret", 1, Vector3.Zero, new Vector3(Position.X, 0, Position.Z), Data.INTERVALLE_MAJ_BASE, Color.White);
+                    NbTurret -= 1;
+                    Tourelle tourelle = new Tourelle(Game, "turret", 2, Vector3.Zero, new Vector3(Position.X, 0, Position.Z), Data.INTERVALLE_MAJ_BASE, Color.White);
                     GameController.ListeDrawableComponents.Add(tourelle);
+                    Game.Components.Add(new Afficheur3D(Game));
                     Game.Components.Add(tourelle);
                 }
             }

@@ -30,7 +30,7 @@ namespace MyGame
         public override void Initialize()
         {
             base.Initialize();
-            HaveTurretTemp = LocalPlayer.HaveTurret;
+            NbTurretTemp = LocalPlayer.NbTurret;
             TexteNbTourelles = new TexteAvantPlan(Game, "x 0", "Lindsey", new Vector2(Ecran.CenterScreen.X * 2 - 45, Ecran.CenterScreen.Y + 50), Couleur);
             Game.Components.Add(TexteNbTourelles);
             GameController.ListeDrawableComponents.Add(TexteNbTourelles);
@@ -43,21 +43,18 @@ namespace MyGame
         }
 
         bool UpdateTexte;
-        bool HaveTurretTemp;
+        int NbTurretTemp;
         float TempsÉcoulé;
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
             if ((TempsÉcoulé += (float)gameTime.ElapsedGameTime.TotalSeconds) > Data.INTERVALLE_MAJ_BASE)
             {
-                if (HaveTurretTemp != LocalPlayer.HaveTurret)
+                if (NbTurretTemp != LocalPlayer.NbTurret)
                 {
-                    HaveTurretTemp = LocalPlayer.HaveTurret;
+                    NbTurretTemp = LocalPlayer.NbTurret;
 
-                    if (LocalPlayer.HaveTurret)
-                        TexteNbTourelles.Texte = "x 1";
-                    else
-                        TexteNbTourelles.Texte = "x 0";
+                    TexteNbTourelles.Texte = "x " + LocalPlayer.NbTurret.ToString();
                 }
             }
 

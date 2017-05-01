@@ -52,7 +52,7 @@ namespace MyGame
         {
             CanCheck = false;
             base.Update(gameTime);
-            if (GestionInput.EstEnfoncée(Keys.E))
+            if (GestionInput.EstNouvelleTouche(Keys.E))
                 CanCheck = true;
 
             if ((TempsÉcoulé += (float)gameTime.ElapsedGameTime.TotalSeconds) > Data.INTERVALLE_MAJ_BASE)
@@ -67,9 +67,10 @@ namespace MyGame
                     if (CadreDistance < 30 && (GameController.MyPlayer.Monney - PRIX_TOURELLE) >= 0)
                     {
                         GameController.MyPlayer.Monney -= PRIX_TOURELLE;
-                        LocalPlayer.HaveTurret = true;
+                        LocalPlayer.NbTurret += 1;
                     }
                 }
+                CanCheck = false;
             }
         }
 
