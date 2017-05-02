@@ -77,6 +77,7 @@
     <Compile Include="CadreGun.cs" />
     <Compile Include="CadreTourelle.cs" />
     <Compile Include="Composants de base\Caméra1stPerson.cs" />
+    <Compile Include="Composants de base\Sphere.cs" />
     <Compile Include="CubeCaméra.cs" />
     <Compile Include="Composants de base\ModelCollisionable.cs" />
     <Compile Include="Composants de base\ObjetDeBase.cs" />

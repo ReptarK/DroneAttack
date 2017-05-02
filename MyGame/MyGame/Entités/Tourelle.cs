@@ -21,11 +21,16 @@ namespace MyGame
         const float RAYON_TIR = 100;
         const float TEMPS_TIR = 1f;
 
+        Color CouleurBase = new Color(0, 0, 255, 50);
+        Color CouleurTir = new Color(255, 255, 255, 50);
+
         RessourcesManager<SoundEffect> GestionnaireDeSons;
         SoundEffect LaserSound;
 
         LocalPlayer MyPlayer;
         CamÈra1stPerson CamÈraJeu;
+
+        Sphere SphereTirCouleur;
 
         protected virtual int Degats { get; set; }
 
@@ -50,6 +55,11 @@ namespace MyGame
 
             SphereDeTir = new BoundingSphere(Position, RAYON_TIR);
             RoundActivÈe = GameController.WaveNo;
+
+            SphereTirCouleur = new Sphere(Game, RAYON_TIR, GraphicsDevice, 1, Vector3.Zero, Position, Data.INTERVALLE_MAJ_BASE, CouleurBase);
+            this.DrawOrder = SphereTirCouleur.DrawOrder + 1;
+            GameController.ListeDrawableComponents.Add(SphereTirCouleur);
+            Game.Components.Add(SphereTirCouleur);
         }
 
         protected override void LoadContent()
@@ -61,8 +71,10 @@ namespace MyGame
         }
 
         public int compteurWave = 0;
+        float Temps…coulÈ;
         float Temps…coulÈSonTir = 0;
         float Temps…coulÈDestruction;
+        float Temps…coulÈCouleur = 0;
         const int WAVE_DURATION = 5;
         public override void Update(GameTime gameTime)
         {
@@ -81,6 +93,13 @@ namespace MyGame
 
                 GererTir(gameTime);
             }
+
+            if ((Temps…coulÈCouleur += (float)gameTime.ElapsedGameTime.TotalSeconds) > 1f)
+            {
+                Temps…coulÈCouleur = 0;
+                SphereTirCouleur.ChangeCouleur(CouleurBase);
+            }
+
         }
 
         bool CanShoot;
@@ -92,11 +111,14 @@ namespace MyGame
             {
                 if (EstEnCollision(d) && CanShoot)
                 {
+                    SphereTirCouleur.Couleur = CouleurTir;
+                    Temps…coulÈCouleur = 0;
                     CanShoot = false;
-                    Game.Components.Add(new RayonLaserCylindrique(Game, 1, Vector3.Zero, SphereDeTir.Center + new Vector3(0, 10,-22), Vector3.Normalize(d.Position - SphereDeTir.Center),
-                    new Vector2(0.1f, Vector3.Distance(SphereDeTir.Center, d.Position)), new Vector2(10, 10), "GreenScreen", 0.01f, 0.1f));
+                    //Game.Components.Add(new RayonLaserCylindrique(Game, 1, Vector3.Zero, SphereDeTir.Center + new Vector3(0, 10, -22), Vector3.Normalize(d.Position - SphereDeTir.Center),
+                    //new Vector2(0.1f, Vector3.Distance(SphereDeTir.Center, d.Position)), new Vector2(10, 10), "GreenScreen", 0.01f, 0.1f));
                     LaserSound.Play(0.3f, 0, 0);
                     d.Health -= d.Health;
+                    SphereTirCouleur.ChangeCouleur(CouleurTir);
                 }
             }
 
