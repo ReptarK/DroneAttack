@@ -23,7 +23,7 @@ namespace MyGame.Entités
         BoundingBox UpdateBoiteCollision()
         {
             boiteDeCollision = new BoundingBox(Position + new Vector3(-Caméra1stPerson.PLAYER_WIDTH / 2, 0, -Caméra1stPerson.PLAYER_WIDTH / 2),
-                                               Position + new Vector3(Caméra1stPerson.PLAYER_WIDTH / 2, 8, Caméra1stPerson.PLAYER_WIDTH / 2));
+                                               Position + new Vector3(Caméra1stPerson.PLAYER_WIDTH / 2, 3, Caméra1stPerson.PLAYER_WIDTH / 2));
 
             return boiteDeCollision;
         }

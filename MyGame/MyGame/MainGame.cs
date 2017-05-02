@@ -108,7 +108,7 @@ namespace AtelierXNA
 
         void GetMap()
         {
-            LecteurFichier = new StreamReader("../../../MapName.txt");
+            LecteurFichier = new StreamReader("MapName.txt");
 
             string line = LecteurFichier.ReadLine();
 

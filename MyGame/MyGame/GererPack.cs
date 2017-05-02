@@ -22,17 +22,23 @@ namespace MyGame
         public override void Initialize()
         {
             base.Initialize();
+            WaveNoTemp = GameController.WaveNo;
         }
 
         float TeampEcoulé;
-        int compteur = 0;
+        int WaveNoTemp;
         public override void Update(GameTime gameTime)
         {
-            if (GameController.PlayState == GameController.InGameState.NewWave)
+            if ((TeampEcoulé += (float)gameTime.ElapsedGameTime.TotalSeconds) > Data.INTERVALLE_MAJ_BASE)
             {
-                foreach (IPack c in Game.Components.Where(composant => composant is IPack && composant is DrawableGameComponent))
+                TeampEcoulé = 0;
+                if (WaveNoTemp != GameController.WaveNo)
                 {
-                    c.EstDétruit = false;
+                    WaveNoTemp = GameController.WaveNo;
+                    foreach (IPack c in Game.Components.Where(composant => composant is IPack && composant is DrawableGameComponent))
+                    {
+                        c.EstDétruit = false;
+                    }
                 }
             }
         }

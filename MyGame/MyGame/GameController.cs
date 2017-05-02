@@ -97,7 +97,6 @@ namespace MyGame
             GestionnaireDeModèles = Game.Services.GetService(typeof(RessourcesManager<Model>)) as RessourcesManager<Model>;
             GestionnaireDeSons = Game.Services.GetService(typeof(RessourcesManager<SoundEffect>)) as RessourcesManager<SoundEffect>;
             GestionnaireDeSongs = Game.Services.GetService(typeof(RessourcesManager<Song>)) as RessourcesManager<Song>;
-            HitMarkerSound = GestionnaireDeSons.Find("HitMarker");
             CaméraJeu = Game.Services.GetService(typeof(Caméra1stPerson)) as Caméra1stPerson;
             ListeComponent.Add(CaméraJeu);
 
@@ -132,6 +131,7 @@ namespace MyGame
             ListeDrawableComponents.Add(TexteVague);
 
             ChangeWaveSong = GestionnaireDeSons.Find("ChangeWaveSong");
+            HitMarkerSound = GestionnaireDeSons.Find("HitMarker");
 
             TexteBienvenue texteBienvenue = new TexteBienvenue(Game, "Ramasse une arme, les drones arrivent !", "Pescadero", new Rectangle(0, 0, Game.Window.ClientBounds.Width, (int)(Game.Window.ClientBounds.Height / 1.5f)), Color.Red, 0.2f);
             ListeDrawableComponents.Add(texteBienvenue);
@@ -247,8 +247,8 @@ namespace MyGame
                             HitMark.Initialize();
                             Game.Components.Add(HitMark);
                         }
-                        drone.Health = drone.Health - MyPlayer.MyGun.Dommage;
-                        HitMarkerSound.Play(0.5f, 0, 0);
+                        drone.Health -= MyPlayer.MyGun.Dommage;
+                        HitMarkerSound.Play(0.4f, 0, 0);
                         MyPlayer.Monney += 50;
                         LocalPlayer.EstShoot = false;
                         return;
@@ -288,7 +288,7 @@ namespace MyGame
         public int NbDronesParWave { get { return WaveNo; } }
         public bool EstWaveSpéciale { get { return WaveNo % 5 == 0; } }
         public int compteurDroneSpawn = 0;
-        public static int WaveNo = 4;
+        public static int WaveNo = 1;
         SoundEffect ChangeWaveSong;
         bool bCheck = true;
         float TempsÉcouléSpawn;

@@ -19,7 +19,7 @@ namespace MyGame
         public override void GenererBoundingBox()
         {
             ListeBoundingBox.Add(new BoundingBox(PositionInitiale, PositionInitiale + new Vector3(DeltaX, DeltaY - 1, 0)));
-            ListeNormales.Add(Vector3.UnitY * Data.GRAVITÉ * 1.8f);
+            ListeNormales.Add(Vector3.UnitY * Data.GRAVITÉ * 2f);
 
             ListeBoundingBox.Add(new BoundingBox(PositionInitiale + new Vector3(DeltaX, 0, 0), PositionInitiale + new Vector3(DeltaX, DeltaY - 1, DeltaZ)));
             ListeNormales.Add(Vector3.UnitX * Caméra1stPerson.FORCE_JOUEUR);

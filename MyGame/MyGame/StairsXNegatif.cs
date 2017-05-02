@@ -22,7 +22,7 @@ namespace MyGame
             ListeNormales.Add(-Vector3.UnitZ * Caméra1stPerson.FORCE_JOUEUR);
 
             ListeBoundingBox.Add(new BoundingBox(PositionInitiale + new Vector3(DeltaX, 0, 0), PositionInitiale + new Vector3(DeltaX, DeltaY - 1, DeltaZ)));
-            ListeNormales.Add(Vector3.UnitY * Data.GRAVITÉ * 1.8f); // STAIR
+            ListeNormales.Add(Vector3.UnitY * Data.GRAVITÉ * 2f); // STAIR
 
             ListeBoundingBox.Add(new BoundingBox(PositionInitiale, PositionInitiale + new Vector3(0, DeltaY - 1, DeltaZ)));
             ListeNormales.Add(-Vector3.UnitX * Caméra1stPerson.FORCE_JOUEUR);

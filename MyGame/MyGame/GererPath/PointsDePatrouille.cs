@@ -182,6 +182,7 @@ namespace MyGame
 
             listeParents.Add(Case7);
             listeParents.Add(Case15);
+            listeParents.Add(Case18);
             //listeParents.Add(Case39);
             Case14.ListeParents = listeParents;
             listeParents = new List<Case>();
@@ -206,6 +207,7 @@ namespace MyGame
 
             listeParents.Add(Case19);
             listeParents.Add(Case17);
+            listeParents.Add(Case14);
             Case18.ListeParents = listeParents;
             listeParents = new List<Case>();
 

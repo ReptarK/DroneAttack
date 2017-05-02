@@ -96,7 +96,7 @@ namespace MyGame.Entités
 
             AncienGun = MyGun;
 
-            Monney = 16000;
+            Monney = 7000;
             Health = 100;
         }
 
@@ -114,8 +114,6 @@ namespace MyGame.Entités
         {
             TexteArgent = new MonneyTexte(Game, "Argent : " + Monney.ToString(), "Pescadero", new Vector2(20, Ecran.CenterScreen.Y / 2), Color.White);
             BarreDeVie = new HealthBar(Game, new Rectangle(20, (int)(Ecran.CenterScreen.Y * 1.5f), 100 * (int)(health / 100), 10), "HealthBar", Color.Red);
-            //BarreDeVie.ZoneAffichage.Width *= (int)Ecran.ScreenScale.X;
-            //BarreDeVie.ZoneAffichage.Height *= (int)Ecran.ScreenScale.Y;
             GestionnaireDeMunitions = new GestionnaireAmmo(Game, Rectangle.Empty, "ammoIcon", Color.White);
 
             GestionnaireDeTourelle AffichageTourelle = new GestionnaireDeTourelle(Game, new Rectangle(Ecran.CenterScreen.X * 2 - 60, Ecran.CenterScreen.Y, 50, 50), "ImageTourelle", Color.White);
@@ -205,10 +203,17 @@ namespace MyGame.Entités
         {
             if(NbTurret > 0 && Caméra1stPerson.EstSol)
             {
-                if(GestionInput.EstNouvelleTouche(Keys.T) && Game.Components.Count(c => c is Tourelle) < 3)
+                if(GestionInput.EstNouvelleTouche(Keys.T) && Game.Components.Count(c => c is Tourelle) < 2)
                 {
                     NbTurret -= 1;
-                    Tourelle tourelle = new Tourelle(Game, "turret", 2, new Vector3(0, CaméraJeu.Direction.X, 0), new Vector3(Position.X + (CaméraJeu.Direction.X * 10), 0, Position.Z + (CaméraJeu.Direction.Z * 10)), Data.INTERVALLE_MAJ_BASE, Color.White);
+
+                    Vector3 rotationTourelle = new Vector3(0, (float)Math.PI / 2 * CaméraJeu.Direction.X, 0);
+                    if (CaméraJeu.Direction.Z < 0)
+                    {
+                        rotationTourelle = new Vector3(0, (float)Math.PI / 2 * (1 -CaméraJeu.Direction.X), 0);
+                        rotationTourelle.Y += (float)Math.PI / 2;
+                    }
+                    Tourelle tourelle = new Tourelle(Game, "turret", 2, rotationTourelle, new Vector3(Position.X + (CaméraJeu.Direction.X * 10), 0, Position.Z + (CaméraJeu.Direction.Z * 10)), Data.INTERVALLE_MAJ_BASE, Color.White);
                     GameController.ListeDrawableComponents.Add(tourelle);
                     Game.Components.Add(new Afficheur3D(Game));
                     Game.Components.Add(tourelle);

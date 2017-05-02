@@ -25,6 +25,7 @@ namespace MyGame
         SoundEffect LaserSound;
 
         LocalPlayer MyPlayer;
+        Caméra1stPerson CaméraJeu;
 
         protected virtual int Degats { get; set; }
 
@@ -49,13 +50,13 @@ namespace MyGame
 
             SphereDeTir = new BoundingSphere(Position, RAYON_TIR);
             RoundActivée = GameController.WaveNo;
-
         }
 
         protected override void LoadContent()
         {
             base.LoadContent();
             MyPlayer = Game.Services.GetService(typeof(LocalPlayer)) as LocalPlayer;
+            CaméraJeu = Game.Services.GetService(typeof(Caméra1stPerson)) as Caméra1stPerson;
             GestionnaireDeSons = new RessourcesManager<SoundEffect>(Game, "Sounds");
         }
 

@@ -80,8 +80,8 @@ namespace MyGame
 
             //MUR INTERNE
             int largeurMur = 12;
-            positionMur = new Vector3(300, 0, 300);
-            GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurMur, 35, 200 - 2.1f)));
+            positionMur = new Vector3(300, 0, 400);
+            GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurMur, 35, 100 - 2.1f)));
 
             positionMur = new Vector3(100 + largeurMur, 0, 300 - largeurMur);
             GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(200, 35, largeurMur)));
@@ -95,8 +95,8 @@ namespace MyGame
 
             positionMur = new Vector3(0, 0, 85);
             GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(50, 35, largeurMur / 2)));
-            //positionMur = new Vector3(50, 0, 65 + largeurMur / 2);
-            //GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurMur / 2, 35, 20)));
+            positionMur = new Vector3(50, 0, 65 + largeurMur / 2);
+            GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurMur / 2, 35, 20)));
             positionMur = new Vector3(50, 0, 63 + largeurMur / 2);
             GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(largeurMur / 2, 35, 22)));
 
@@ -156,8 +156,6 @@ namespace MyGame
             positionMur = new Vector3(230, 0, 40 + longueurPont + largeurEscalier * 4);
             GameController.ListMurs.Add(new StairsZNegatif(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(40, 4, largeurEscalier)));
 
-
-
             largeurMur = largeurEscalier;
             //Grosse plateforme entre escaliers
             positionMur = new Vector3(80 + 6 * largeurEscalier, -5, 0);
@@ -198,7 +196,7 @@ namespace MyGame
             GameController.ListCrate.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionCrate + new Vector3(taille.X * 2, 0, 2 * taille.Z), "MetalBox2", taille));
             GameController.ListCrate.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionCrate + new Vector3(taille.X * 3, 0, 2 * taille.Z), "MetalBox2", taille));
             GameController.ListCrate.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionCrate + new Vector3(0, taille.Y, 0), "MetalBox2", taille));
-            GameController.ListCrate.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionCrate + new Vector3(0, taille.Y, 3 * taille.Z), "MetalBox2", taille));
+            //GameController.ListCrate.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionCrate + new Vector3(0, taille.Y, 3 * taille.Z), "MetalBox2", taille));
             GameController.ListCrate.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionCrate + new Vector3(0, taille.Y, 4 * taille.Z), "MetalBox2", taille));
             GameController.ListCrate.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionCrate + new Vector3(taille.X, taille.Y, 2 * taille.Z), "MetalBox2", taille));
             GameController.ListCrate.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionCrate + new Vector3(taille.X * 3, taille.Y, 2 * taille.Z), "MetalBox2", taille));
@@ -214,7 +212,7 @@ namespace MyGame
             GameController.ListCrate.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionCrate + new Vector3(taille.X * 2, 0, 0), "MetalBox2", taille));
             GameController.ListCrate.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionCrate + new Vector3(taille.X * 3, 0, 0), "MetalBox2", taille));
             GameController.ListCrate.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionCrate + new Vector3(0, taille.Y, 0), "MetalBox2", taille));
-            GameController.ListCrate.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionCrate + new Vector3(0, taille.Y, 3 * taille.Z), "MetalBox2", taille));
+            //GameController.ListCrate.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionCrate + new Vector3(0, taille.Y, 3 * taille.Z), "MetalBox2", taille));
             GameController.ListCrate.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionCrate + new Vector3(0, taille.Y, 4 * taille.Z), "MetalBox2", taille));
 
 

@@ -18,7 +18,7 @@ namespace AtelierXNA
         const float DELTA_TANGAGE = MathHelper.Pi / 180; // 1 degré à la fois
 
         public const float HAUTEUR_PLAYER = 15;
-        public const float PLAYER_WIDTH = 3;
+        public const float PLAYER_WIDTH = 2.4f;
 
 
         const float VITESSE_UPDATE_DEPLACEMENT = 0.45f;
@@ -245,10 +245,13 @@ namespace AtelierXNA
         {
             if (EstLadder)
             {
-                SommeDesForces += Vector3.UnitY * 1 * (GérerTouche(Keys.W) - GérerTouche(Keys.S));
+                SommeDesForces += Vector3.UnitY * (GérerTouche(Keys.W) - GérerTouche(Keys.S));
                 SommeDesForces += new Vector3(Latéral.X, 0, Latéral.Z) * (GérerTouche(Keys.A) - GérerTouche(Keys.D));
                 return;
             }
+
+            if (GestionInput.EstNouvelleTouche(Keys.B))
+            { }
             Vector3 vecteurTotal;
             Vector3 vecteurD = new Vector3(Direction.X, 0, Direction.Z) * (GérerTouche(Keys.W) - GérerTouche(Keys.S));
             Vector3 vecteurL = new Vector3(Latéral.X, 0, Latéral.Z) * (GérerTouche(Keys.A) - GérerTouche(Keys.D));
