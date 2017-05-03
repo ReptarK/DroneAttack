@@ -128,13 +128,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\HitMark.png">
-      <Name>HitMark</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Textures\blast.png">
       <Name>blast</Name>
       <Importer>TextureImporter</Importer>
@@ -563,6 +556,13 @@
   <ItemGroup>
     <Compile Include="Textures\asteroid_crystal_6_diffuse.png">
       <Name>asteroid_crystal_6_diffuse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\HitMark.png">
+      <Name>HitMark</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -106,7 +106,7 @@ namespace AtelierXNA
             Services.AddService(typeof(SpriteBatch), new SpriteBatch(GraphicsDevice));
         }
 
-        void GetMap()
+        public static void GetMap()
         {
             LecteurFichier = new StreamReader("MapName.txt");
 
@@ -117,7 +117,7 @@ namespace AtelierXNA
                 case ("BridgeMap"): Data.NomCarte = Data.CarteName.BridgeMap; break;
                 case ("OuaiMap"): Data.NomCarte = Data.CarteName.OuaiMap; break;
             }
-
+            LecteurFichier.Dispose();
             LecteurFichier.Close();
         }
 

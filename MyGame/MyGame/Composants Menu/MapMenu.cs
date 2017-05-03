@@ -42,7 +42,7 @@ namespace AtelierXNA.Composant_Menu
             base.Initialize();
             Ecran = Game.Services.GetService(typeof(Screen)) as Screen;
 
-            EcritureFichier = new StreamWriter("../../../MapName.txt", false);
+            EcritureFichier = new StreamWriter("MapName.txt", false);
             OldCarteName = Data.NomCarte;
             InitialiserBoites();
         }
@@ -84,6 +84,7 @@ namespace AtelierXNA.Composant_Menu
                 {
                     OldCarteName = Data.NomCarte;
                     EcritureFichier.WriteLine(OldCarteName.ToString());
+                    EcritureFichier.Dispose();
                     EcritureFichier.Close();
                     Application.Restart();
                 }

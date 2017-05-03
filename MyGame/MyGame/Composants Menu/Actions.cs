@@ -20,6 +20,7 @@ namespace AtelierXNA
                 return;
             }
 
+            
             MenuController.State = MenuController.MenuState.Jeu;
             MainGame.MainGameState = MainGame.GameState.Jeu;
 
@@ -85,18 +86,21 @@ namespace AtelierXNA
         {
             MenuController.bChoseMap = true;
             Data.NomCarte = Data.CarteName.OuaiMap;
+
             MenuController.State = MenuController.MenuState.Main;
         }
 
         //BOTS
         public static void AugmentDifficulty(Game game)
         {
-            Data.DifficultéIndex++;
+            if (!GameController.DoInitialize)
+                Data.DifficultéIndex++;
         }
 
         public static void LowerDifficulty(Game game)
         {
-            Data.DifficultéIndex--;
+            if (!GameController.DoInitialize)
+                Data.DifficultéIndex--;
         }
 
         //COLOR INDEX
