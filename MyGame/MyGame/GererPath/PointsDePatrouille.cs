@@ -12,7 +12,6 @@ namespace MyGame
     {
         public static List<Case> ListePoints;
         public static List<Case> ListeSpawns;
-
         static PointsDePatrouille()
         {
             ListePoints = new List<Case>();
@@ -27,7 +26,6 @@ namespace MyGame
         public static void GenererPointsBridge()
         {
             List<Case> listeParents = new List<Case>();
-
             Case Case1 = new Case(new Vector3(63, 10, 22), null); ListePoints.Add(Case1);
             Case Case2 = new Case(new Vector3(66, 10, 122), null); ListePoints.Add(Case2);
             Case Case3 = new Case(new Vector3(26, 10, 172), null); ListePoints.Add(Case3);

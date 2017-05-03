@@ -134,8 +134,8 @@ namespace MyGame
             HitMarkerSound = GestionnaireDeSons.Find("HitMarker");
 
             TexteBienvenue texteBienvenue = new TexteBienvenue(Game, "Ramasse une arme, les drones arrivent !", "Pescadero", new Rectangle(0, 0, Game.Window.ClientBounds.Width, (int)(Game.Window.ClientBounds.Height / 1.5f)), Color.Red, 0.2f);
-            ListeDrawableComponents.Add(texteBienvenue);
-            Game.Components.Add(texteBienvenue);
+            //ListeDrawableComponents.Add(texteBienvenue);
+            //Game.Components.Add(texteBienvenue);
             Game.Components.Add(TexteVague);
             Game.Components.Add(DroneEnVieTexte);
 
@@ -144,6 +144,11 @@ namespace MyGame
             d.Initialize();
             d = null;
 
+            //ENLEVER
+            //ObjetDeDémo drone = new ObjetDeDémo(Game, "drone", 0.4f, Vector3.Zero, new Vector3(42, 10, 137), Data.INTERVALLE_MAJ_BASE, Color.Yellow);
+            //ListeDrawableComponents.Add(drone);
+            //Game.Components.Add(new Afficheur3D(Game));
+            //Game.Components.Add(drone);
         }
 
         public void InitialiserCarte()
@@ -224,7 +229,7 @@ namespace MyGame
                 {
                     if (MyPlayer.Health < 100 && c is HealthPack)
                         MyPlayer.Health += 25;
-                    if (c is AmmoPack)
+                    if (c is AmmoPack && MyPlayer.MyGun != null)
                         MyPlayer.MyGun.TotalMunitions += MyPlayer.MyGun.MunitionsParLoad * 3;
 
                     c.EstDétruit = true;
@@ -330,7 +335,7 @@ namespace MyGame
                 {
                     case (RedDrone.IndexDrone): d = new RedDrone(Game, "drone", 0.4f, Vector3.Zero, Vector3.Zero, Data.INTERVALLE_MAJ_BASE, new Color(GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255)), PointsDePatrouille.ListeSpawns[GenerateurRandom.Next(0, PointsDePatrouille.ListeSpawns.Count)], GenerateurRandom.Next(80, 150), (int)Math.Ceiling(WaveNo * WaveNo / 2f)); break;
                     case (BlueDrone.IndexDrone): d = new BlueDrone(Game, "drone", 0.4f, Vector3.Zero, Vector3.Zero, Data.INTERVALLE_MAJ_BASE, new Color(GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255)), PointsDePatrouille.ListeSpawns[GenerateurRandom.Next(0, PointsDePatrouille.ListeSpawns.Count)], GenerateurRandom.Next(80, 150), (int)Math.Ceiling(WaveNo * WaveNo / 2f)); break;
-                    case (YellowDrone.IndexDrone): d = new YellowDrone(Game, "drone", 0.4f, Vector3.Zero, Vector3.Zero, Data.INTERVALLE_MAJ_BASE, new Color(GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255)), PointsDePatrouille.ListeSpawns[GenerateurRandom.Next(0, PointsDePatrouille.ListeSpawns.Count)], GenerateurRandom.Next(80, 150), (int)Math.Ceiling(WaveNo * WaveNo / 2f)); break;
+                    case (YellowDrone.IndexDrone): d = new YellowDrone(Game, "drone", 0.4f, Vector3.Zero, Vector3.Zero, Data.INTERVALLE_MAJ_BASE, new Color(GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255)), PointsDePatrouille.ListeSpawns[GenerateurRandom.Next(0, PointsDePatrouille.ListeSpawns.Count)], GenerateurRandom.Next(80, 150), (int)Math.Min(Math.Ceiling(WaveNo * WaveNo / 2f), 162)); break;
                     default: d = new Drone(Game, "drone", 0.4f, Vector3.Zero, Vector3.Zero, Data.INTERVALLE_MAJ_BASE, new Color(GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255), GenerateurRandom.Next(0, 255)), PointsDePatrouille.ListeSpawns[GenerateurRandom.Next(0, PointsDePatrouille.ListeSpawns.Count)], GenerateurRandom.Next(80, 150), (int)Math.Ceiling(WaveNo * WaveNo / 2f)); break;
                 }
             }

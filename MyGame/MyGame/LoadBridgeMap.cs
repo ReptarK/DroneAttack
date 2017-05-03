@@ -67,7 +67,7 @@ namespace MyGame
             // MURS BORNE EXTERNE
             Vector3 positionMur;
             positionMur = new Vector3(0, 0, -2);
-            GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(498, 40, 5)));
+            GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(500, 40, 5)));
 
             positionMur = new Vector3(500 - 2.1f, 0, 0);
             GameController.ListMurs.Add(new CubeTexturé(Game, 1f, Vector3.Zero, positionMur, "MurTexture", new Vector3(5, 40, 498)));

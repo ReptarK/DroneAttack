@@ -96,7 +96,7 @@ namespace MyGame.Entités
 
             AncienGun = MyGun;
 
-            Monney = 7000;
+            Monney = 500;
             Health = 100;
         }
 

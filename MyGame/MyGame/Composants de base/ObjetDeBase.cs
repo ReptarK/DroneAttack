@@ -19,6 +19,7 @@ namespace AtelierXNA
         protected Matrix[] TransformationsModèle { get; private set; }
         protected Matrix Monde { get; set; }
 
+        Color Couleur;
         public ObjetDeBase(Game jeu, String nomModèle, float échelleInitiale, Vector3 rotationInitiale, Vector3 positionInitiale)
            : base(jeu)
         {

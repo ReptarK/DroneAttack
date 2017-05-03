@@ -83,6 +83,9 @@ namespace MyGame
             {
                 if((RoundActivée + WAVE_DURATION) == GameController.WaveNo)
                 {
+                    GameController.ListeDrawableComponents.Remove(SphereTirCouleur);
+                    GameController.ListeDrawableComponents.Remove(this);
+                    Game.Components.Remove(SphereTirCouleur);
                     Game.Components.Remove(this);
                 }
             }
