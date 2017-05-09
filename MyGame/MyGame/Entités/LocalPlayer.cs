@@ -157,7 +157,7 @@ namespace MyGame.Entités
             if (GestionInput.EstNouvelleTouche(Keys.Up))
                 Health -= 10;
 
-            if ((TempsÉcoulé += (float)gameTime.ElapsedGameTime.TotalSeconds) > Data.INTERVALLE_MAJ_BASE / 10)
+            if ((TempsÉcoulé += (float)gameTime.ElapsedGameTime.TotalSeconds) > Data.INTERVALLE_MAJ_BASE /*/ 10*/)
             {
                 UpdatePosition();
                 GererJump();

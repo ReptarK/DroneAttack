@@ -15,11 +15,13 @@ namespace MyGame.Composants_Menu
 {
     public class MenuController : Microsoft.Xna.Framework.DrawableGameComponent, IController
     {
-        public const MainGame.GameState GAME_STATE = MainGame.GameState.Menu;
+        //public const MainGame.GameState GAME_STATE = MainGame.GameState.Menu;
         public MainGame.GameState CONTROLLER_STATE;
 
+        //Liste des composants du menu
         List<DrawableGameComponent> ListeComposants;
 
+        //Les états des menus
         public enum MenuState
         {
             Jeu,
@@ -29,27 +31,33 @@ namespace MyGame.Composants_Menu
             Credits,
             ScoreBoard
         }
-        ArrièrePlan ArrierePlan;
 
-        RessourcesManager<Song> GestionnaireDeSongs;
-        Song ChansonBackground;
+        ArrièrePlan ArrierePlan { get; set; }
 
-        public MainMenu mainMenu;
-        public OptionMenu optionMenu;
-        public CreditMenu creditMenu;
-        public MapMenu mapMenu;
-        public MortPlayerMenu mortPlayerMenu;
+        RessourcesManager<Song> GestionnaireDeChansons { get; set; }
+        Song TrameDeFond { get; set; }
 
-        public static MenuState State;
-        public static MenuState OldState;
+        //Les menus que cette classe contrôle
+        MainMenu mainMenu { get; set; }
+        OptionMenu optionMenu { get; set; }
+        CreditMenu creditMenu { get; set; }
+        MapMenu mapMenu { get; set; }
+        MortPlayerMenu mortPlayerMenu { get; set; }
 
-        public List<IMenu> ListeMenu;
+        //Permet de savoir si le menu state à changé
+        public static MenuState State { get; set; }
+        static MenuState OldState { get; set; }
 
-        public static bool bChoseMap = true;
+        //Liste de tous les menus gérables par cette classe
+        public List<IMenu> ListeMenu { get; set; }
+
+        public static bool bChoseMap { get; set; }
 
         public MenuController(Game game)
             : base(game)
         {
+            bChoseMap = true;
+
             State = MenuState.Main;
             OldState = MenuState.Option;
 
@@ -60,38 +68,29 @@ namespace MyGame.Composants_Menu
             mortPlayerMenu = new MortPlayerMenu(game);
         }
 
-        /// <summary>
-        /// Allows the game component to perform any initialization it needs to before starting
-        /// to run.  This is where it can query for any required services and load content.
-        /// </summary>
         public override void Initialize()
         {
             ListeComposants = new List<DrawableGameComponent>();
+            base.Initialize();
+
+            InitialiserArrierePlanMenu();
+            InitialiserMusique();
+            InitialiserMenu();
+        }
+
+        void InitialiserArrierePlanMenu()
+        {
             ArrierePlan = new ArrièrePlan(Game, "BackgroundMenu");
             Game.Components.Add(ArrierePlan);
             ListeComposants.Add(ArrierePlan);
-
-            base.Initialize();
-
-            InitialiserMusique();
-
-            InitialiserMenu();
-
-            Game.Components.Add(mainMenu);
-            Game.Components.Add(optionMenu);
-            Game.Components.Add(creditMenu);
-            Game.Components.Add(mapMenu);
-            Game.Components.Add(mortPlayerMenu);
         }
 
         void InitialiserMusique()
         {
-            GestionnaireDeSongs = Game.Services.GetService(typeof(RessourcesManager<Song>)) as RessourcesManager<Song>;
-            ChansonBackground = GestionnaireDeSongs.Find("MenuBackgroundSound");
-            MediaPlayer.Play(ChansonBackground);
+            GestionnaireDeChansons = Game.Services.GetService(typeof(RessourcesManager<Song>)) as RessourcesManager<Song>;
+            TrameDeFond = GestionnaireDeChansons.Find("MenuBackgroundSound");
+            MediaPlayer.Play(TrameDeFond);
         }
-
-        
 
         void InitialiserMenu()
         {
@@ -101,12 +100,18 @@ namespace MyGame.Composants_Menu
             ListeMenu.Add(creditMenu);
             ListeMenu.Add(mapMenu);
             ListeMenu.Add(mortPlayerMenu);
+
+            Game.Components.Add(mainMenu);
+            Game.Components.Add(optionMenu);
+            Game.Components.Add(creditMenu);
+            Game.Components.Add(mapMenu);
+            Game.Components.Add(mortPlayerMenu);
         }
 
-        double TempsÉcoulé;
+        float TempsÉcoulé;
         public override void Update(GameTime gameTime)
         {
-            if ((TempsÉcoulé += gameTime.ElapsedGameTime.TotalSeconds) > Data.INTERVALLE_MAJ_BASE)
+            if ((TempsÉcoulé += (float)gameTime.ElapsedGameTime.TotalSeconds) > Data.INTERVALLE_MAJ_BASE)
             {
                 base.Update(gameTime);
 
@@ -114,7 +119,7 @@ namespace MyGame.Composants_Menu
                 {
                     GererTransition();
                     OldState = State;
-                    if(State == MenuState.Jeu)
+                    if (State == MenuState.Jeu)
                     {
                         MediaPlayer.Pause();
                         ArrierePlan.ToggleFondEcran(false);
@@ -124,14 +129,16 @@ namespace MyGame.Composants_Menu
             }
         }
 
+        //Défini quel menu doit afficher (interface IMenu --> ToggleMenu)
         void GererTransition()
         {
-            foreach(IMenu menu in ListeMenu)
+            foreach (IMenu menu in ListeMenu)
             {
                 menu.ToggleMenu(State);
             }
         }
 
+        //Défini si le jeu doit afficher le menu
         public void IsVisibleController(MainGame.GameState gameState)
         {
             bool state = false;
@@ -144,8 +151,6 @@ namespace MyGame.Composants_Menu
                 c.Enabled = state;
                 c.Visible = state;
             }
-
-            GererTransition();
 
             if (!state)
                 MediaPlayer.Pause();

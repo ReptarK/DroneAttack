@@ -17,7 +17,7 @@ namespace AtelierXNA.Composant_Menu
     {
         Screen Ecran;
 
-        public List<DrawableGameComponent> ListeBoxEventMenu;
+        List<DrawableGameComponent> ListeÉlémentsMenu;
 
         public static BoxEventMenu CreditBox;
         public static BoxEventMenu BackBox;
@@ -38,14 +38,14 @@ namespace AtelierXNA.Composant_Menu
 
         void InitialiserBoites()
         {
-            ListeBoxEventMenu = new List<DrawableGameComponent>();
+            ListeÉlémentsMenu = new List<DrawableGameComponent>();
 
             CreditBox = new BoxEventMenu(Game, new Point(Ecran.CenterScreen.X / 7, Ecran.CenterScreen.Y / 8),
                                     "Fait par : \n Benjamin Archambault &\n Derek Bernard\n\nCréateur des cartes :\nDerek Bernard", Color.White, Actions.Null);
-            ListeBoxEventMenu.Add(CreditBox);
+            ListeÉlémentsMenu.Add(CreditBox);
 
             BackBox = new BoxEventMenu(Game, new Point(Ecran.CenterScreen.X / 7, Ecran.CenterScreen.Y + 200), "BACK", Color.LightGoldenrodYellow, Actions.BackToMainMenu);
-            ListeBoxEventMenu.Add(BackBox);
+            ListeÉlémentsMenu.Add(BackBox);
 
             Game.Components.Add(CreditBox);
             Game.Components.Add(BackBox);
@@ -58,7 +58,7 @@ namespace AtelierXNA.Composant_Menu
         {
             if ((TempsÉcoulé += gameTime.ElapsedGameTime.TotalSeconds) > Data.INTERVALLE_MAJ_BASE)
             {
-                foreach (BoxEventMenu box in ListeBoxEventMenu)
+                foreach (BoxEventMenu box in ListeÉlémentsMenu)
                 {
                     if (box.bEstClické)
                     {
@@ -79,7 +79,7 @@ namespace AtelierXNA.Composant_Menu
             if (menuState == MenuController.MenuState.Credits) //MODIFIER
                 state = true;
 
-            foreach (DrawableGameComponent c in ListeBoxEventMenu)
+            foreach (DrawableGameComponent c in ListeÉlémentsMenu)
             {
                 c.Enabled = state;
                 c.Visible = state;

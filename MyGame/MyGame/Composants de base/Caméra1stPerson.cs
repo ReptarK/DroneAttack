@@ -269,20 +269,6 @@ namespace AtelierXNA
             }
         }
 
-        //void GererCrouch()
-        //{
-        //    //if (EstCrouch)
-        //    //{
-        //    //    Position.Y = Position.Y - HAUTEUR_PLAYER / 2f;   // À CHANGER POUR POSITION DU JOUEUR + HAUTEUR
-        //    //    VitesseTranslation = VITESSE_JOUEUR / 2f;
-        //    //}
-        //    //else
-        //    //{
-        //    //    Position.Y = Position.Y + HAUTEUR_PLAYER / 2f;
-        //    //    VitesseTranslation = VITESSE_JOUEUR;
-        //    //}
-        //}
-
         float compteurSaut = 0;
         float ForceSaut = 8;
         void GererJump()
@@ -310,19 +296,11 @@ namespace AtelierXNA
             if (GestionInput.EstNouvelleTouche(Keys.B))
             { }
 
-            int compteur = 0;
             foreach (Vector3 v in ListNormaleObjetCollision)
             {
                 SommeDesForces += v;
-                ++compteur;
             }
-
-            if (compteur > 2)
-                SommeDesForces += Vector3.Zero;
-            compteur = 0;
         }
-
-        int compteurRoulis = 0;
 
         private int GérerTouche(Keys touche)
         {
@@ -353,8 +331,6 @@ namespace AtelierXNA
             i = DéplacementSouris.Y * VitesseRotation;
 
             Direction = Vector3.Transform(Direction, Matrix.CreateFromAxisAngle(Latéral, DELTA_TANGAGE * i * Data.Sensivity));
-            //OrientationVerticale = Vector3.Transform(OrientationVerticale, Matrix.CreateFromAxisAngle(Latéral, DELTA_TANGAGE * i));
-            //OrientationVerticale = Vector3.Normalize(OrientationVerticale);
         }
     }
 }
